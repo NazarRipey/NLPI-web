@@ -8,7 +8,6 @@ using System.Threading.Tasks;
 namespace NLPI.Core.Abstractions.IRepositories
 {
     public interface ILevelRepo : IBaseRepo<Level>
-    {
-        Task<IEnumerable<Level>> GetAllDetailedAsync(int userId);
+    {        
     }
 }

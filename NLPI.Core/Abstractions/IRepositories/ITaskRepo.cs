@@ -7,10 +7,8 @@ using System.Threading.Tasks;
 
 namespace NLPI.Core.Abstractions.IRepositories
 {
-    public interface ICSSTaskRepo : IBaseRepo<CSSTask>
+    public interface ITaskRepo : IBaseRepo<TestTask>
     {
-        Task<IEnumerable<CSSTask>> GetAllDetailedAsync();
 
-        Task<CSSTask> GetExecAsync(int id);
     }
 }

@@ -23,7 +23,7 @@ namespace NLPI.Web.Extensions
             services.AddScoped<IAchievementDataService, AchievementDataService>();
             services.AddScoped<ILevelService, LevelService>();
             services.AddScoped<IAnswerService, AnswerService>();
-            services.AddScoped<ICSSTaskService, CSSTaskService>();
+            services.AddScoped<ITaskService, TaskService>();
             services.AddScoped<IHintService, HintService>();
             services.AddScoped<IMetadataService, MetadataService>();
             services.AddScoped<IQuestionService, QuestionService>();

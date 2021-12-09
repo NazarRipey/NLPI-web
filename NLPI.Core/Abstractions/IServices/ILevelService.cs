@@ -7,12 +7,12 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
+using NLPI.Core.DTO.MainDTOs;
 
 namespace NLPI.Core.Abstractions.IServices
 {
-    public interface ILevelService : IBaseService<LevelDTO, LevelDTO>
+    public interface ILevelService : IBaseService<Level, Level>
     {
-        Task GenerateAsync(Difficulty difficulty);
-        Task<List<LevelTasksDTO>> GetAllDetailed(string email);
+        public Task<LevelResult> CheckLevel(LevelAnswerDTO answer);
     }
 }

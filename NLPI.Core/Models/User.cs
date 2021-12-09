@@ -10,7 +10,7 @@ namespace NLPI.Core.Models
         public User()
         {
             UserAchievements = new HashSet<UserAchievement>();
-            TaskResults = new HashSet<TaskResult>();
+            TaskResults = new HashSet<LevelResult>();
         }
         public int Id { get; set; }
         public string FirstName { get; set; }
@@ -22,6 +22,6 @@ namespace NLPI.Core.Models
 
 
         public virtual ICollection<UserAchievement> UserAchievements { get; set; }
-        public virtual ICollection<TaskResult> TaskResults { get; set; }
+        public virtual ICollection<LevelResult> TaskResults { get; set; }
     }
 }

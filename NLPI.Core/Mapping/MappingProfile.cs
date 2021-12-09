@@ -25,14 +25,12 @@ namespace NLPI.Core.Mapping
 
             CreateMap<UserAchievement, UserAchievementDTO>()
                 .ForMember(dest => dest.UserEmail, opts => opts.MapFrom(item => item.IdUserNavigation.Email))
-                .ForMember(dest => dest.LevelTitle, opts => opts.MapFrom(item => item.IdLevelNavigation.Title))
-                .ForMember(dest => dest.LevelTotal, opts => opts.MapFrom(item => item.IdLevelNavigation.TasksCount));
+                .ForMember(dest => dest.LevelTitle, opts => opts.MapFrom(item => item.IdLevelNavigation.Name));                
             CreateMap<UserAchievementDTO, UserAchievement>();
 
             CreateMap<UserAchievement, GetUserAchievementDTO>()
                 .ForMember(dest => dest.UserEmail, opts => opts.MapFrom(item => item.IdUserNavigation.Email))
-                .ForMember(dest => dest.LevelTitle, opts => opts.MapFrom(item => item.IdLevelNavigation.Title))
-                .ForMember(dest => dest.LevelTotal, opts => opts.MapFrom(item => item.IdLevelNavigation.TasksCount));
+                .ForMember(dest => dest.LevelTitle, opts => opts.MapFrom(item => item.IdLevelNavigation.Name));                
 
             CreateMap<SetUserAchievementDTO, AchievementData>();
 
@@ -44,40 +42,18 @@ namespace NLPI.Core.Mapping
 
             CreateMap<Level, LevelTasksDTO>();
 
-            CreateMap<AchievementData, SimpleAchievDataDTO>()
-                .ForMember(dest => dest.CompletedCount, opts => opts.MapFrom(item => item.CompletedCount.ToString() + "/" + item.IdUserAchievementNavigation.IdLevelNavigation.TasksCount.ToString()))
-                .ForMember(dest => dest.CorrectCount, opts => opts.MapFrom(item => item.CorrectCount.ToString() + "/" + item.IdUserAchievementNavigation.IdLevelNavigation.TasksCount.ToString()))
+            CreateMap<AchievementData, SimpleAchievDataDTO>()                
                 .ForMember(dest => dest.SaveDate, opts => opts.MapFrom(item => item.IdUserAchievementNavigation.SaveDate))
-                .ForMember(dest => dest.TrainingTestTitle, opts => opts.MapFrom(item => item.IdUserAchievementNavigation.IdLevelNavigation.Title));
+                .ForMember(dest => dest.TrainingTestTitle, opts => opts.MapFrom(item => item.IdUserAchievementNavigation.IdLevelNavigation.Name));
 
-            CreateMap<AchievementData, DetailAchievDataDTO>()
-                .ForMember(dest => dest.CompletedCount, opts => opts.MapFrom(item => item.CompletedCount.ToString() + "/" + item.IdUserAchievementNavigation.IdLevelNavigation.TasksCount.ToString()))
-                .ForMember(dest => dest.CorrectCount, opts => opts.MapFrom(item => item.CorrectCount.ToString() + "/" + item.IdUserAchievementNavigation.IdLevelNavigation.TasksCount.ToString()))
+            CreateMap<AchievementData, DetailAchievDataDTO>()                
                 .ForMember(dest => dest.SaveDate, opts => opts.MapFrom(item => item.IdUserAchievementNavigation.SaveDate))
-                .ForMember(dest => dest.TrainingTestTitle, opts => opts.MapFrom(item => item.IdUserAchievementNavigation.IdLevelNavigation.Title))
+                .ForMember(dest => dest.TrainingTestTitle, opts => opts.MapFrom(item => item.IdUserAchievementNavigation.IdLevelNavigation.Name))
                 .ForMember(dest => dest.AchievTitle, opts => opts.MapFrom(item => item.IdUserAchievementNavigation.Title))
                 .ForMember(dest => dest.AchievNotes, opts => opts.MapFrom(item => item.IdUserAchievementNavigation.Notes));
 
             CreateMap<Answer, AnswerDTO>().ReverseMap();
-
-            CreateMap<CSSTask, CSSTaskDTO>().ReverseMap();
-            CreateMap<CSSTask, CSSTaskDTOOutput>()
-                .ForMember(dest => dest.QuestionText, opts => opts.MapFrom(src => src.IdQuestionNavigation.QuestionText))
-                .ForMember(dest=>dest.HtmlText, opts => opts.MapFrom(src => src.IdQuestionNavigation.HtmlText))
-                .ForMember(dest => dest.EtalonAnswer, opts => opts.MapFrom(src => src.IdAnswerNavigation.EtalonAnswer));
-
-            CreateMap<CSSTask, CSSTaskExecDTO>()
-                .ForMember(dest => dest.Question, opts => opts.MapFrom(src => src.IdQuestionNavigation.QuestionText))
-                .ForMember(dest => dest.Answer, opts => opts.MapFrom(src => src.IdAnswerNavigation.EtalonAnswer))
-                .ForMember(dest => dest.HtmlText, opts => opts.MapFrom(item => item.IdQuestionNavigation.HtmlText))
-                .ForMember(dest => dest.LevelTitle, opts => opts.MapFrom(src => src.TaskDistributions.FirstOrDefault()!.IdLevelNavigation.Title));
-
-            CreateMap<CSSTask, CSSTaskDetailedDTO>()
-                .ForMember(dest => dest.Answer, opts => opts.MapFrom(item => item.IdAnswerNavigation.EtalonAnswer))
-                .ForMember(dest => dest.Question, opts => opts.MapFrom(item => item.IdQuestionNavigation.QuestionText));
-
-
-
+                        
             CreateMap<Hint, HintDTO>().ReverseMap();
             CreateMap<Metadata, MetadataDTO>().ReverseMap();
             CreateMap<Question, QuestionDTO>().ReverseMap();
@@ -88,9 +64,9 @@ namespace NLPI.Core.Mapping
             CreateMap<TaskDistribution, TaskDistributionDetailedDTO>()
                 .ForMember(dest => dest.Task, opts => opts.MapFrom(item => item.IdTaskNavigation));
 
-            CreateMap<TaskResultCreateDTO, TaskResult>();
+            CreateMap<TaskResultCreateDTO, LevelResult>();
 
-            CreateMap<TaskResult, TaskResultDTO>().ReverseMap();
+            CreateMap<LevelResult, TaskResultDTO>().ReverseMap();
             //CreateMap<UnitDistribution, UnitDistributionDTO>().ReverseMap();
             CreateMap<Unit, UnitDTO>().ReverseMap();
         }

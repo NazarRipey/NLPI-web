@@ -10,12 +10,12 @@ namespace NLPI.Core.Models
         public Metadata()
         {
             TagDistributions = new HashSet<TagDistribution>();
-            Tasks = new HashSet<CSSTask>();
+            Tasks = new HashSet<TestTask>();
         }
         public int Id { get; set; }
         public int IdUnit { get; set; }
         public virtual Unit IdUnitNavigation { get; set; }
         public virtual ICollection<TagDistribution> TagDistributions { get; set; }
-        public virtual ICollection<CSSTask> Tasks { get; set; }
+        public virtual ICollection<TestTask> Tasks { get; set; }
     }
 }

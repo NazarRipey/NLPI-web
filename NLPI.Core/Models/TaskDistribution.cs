@@ -12,7 +12,7 @@ namespace NLPI.Core.Models
         public int TaskOrder { get; set; }
         public int IdTask { get; set; }
         public int IdLevel { get; set; }
-        public virtual CSSTask IdTaskNavigation { get; set; }
+        public virtual TestTask IdTaskNavigation { get; set; }
         public virtual Level IdLevelNavigation { get; set; }
     }
 }

@@ -9,7 +9,7 @@ namespace NLPI.Core.Abstractions
     public interface IUnitOfWork : IDisposable
     {
         IAnswerRepo AnswerRepo { get; }
-        ICSSTaskRepo CSSTaskRepo { get; }
+        ITaskRepo TaskRepo { get; }
         IHintRepo HintRepo { get; }
         IMetadataRepo MetadataRepo { get; }
         IQuestionRepo QuestionRepo { get; }

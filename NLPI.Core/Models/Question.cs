@@ -9,11 +9,11 @@ namespace NLPI.Core.Models
     {
         public Question()
         {
-            Tasks = new HashSet<CSSTask>();
+            Tasks = new HashSet<TestTask>();
         }
         public int Id { get; set; }
         public string QuestionText { get; set; }
         public string HtmlText { get; set; }
-        public virtual ICollection<CSSTask> Tasks { get; set; }
+        public virtual ICollection<TestTask> Tasks { get; set; }
     }
 }

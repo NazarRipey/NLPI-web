@@ -23,7 +23,7 @@ namespace NLPI.Services
         }
         public virtual async Task CreateAsync(TaskResultDTO entity)
         {
-            var value = new TaskResult();
+            var value = new LevelResult();
             _mapper.Map(entity, value);
             await _unitOfWork.TaskResultRepo.AddAsync(value);
             await _unitOfWork.SaveChangesAsync();
@@ -32,23 +32,23 @@ namespace NLPI.Services
 
         public virtual async Task<TaskResultDTO> CreateNewAsync(TaskResultCreateDTO dto)
         {
-            var users = await _unitOfWork.UserRepo.GetAllAsync();
+            //var users = await _unitOfWork.UserRepo.GetAllAsync();
 
-            var user = users.FirstOrDefault(u => u.Email == dto.UserEmail);
-            if (user == null)
-            {
-                throw new NotFoundException("User");
-            }
+            //var user = users.FirstOrDefault(u => u.Email == dto.UserEmail);
+            //if (user == null)
+            //{
+            //    throw new NotFoundException("User");
+            //}
 
-            var entity = _mapper.Map<TaskResult>(dto);
-            entity.ResultDate = DateTime.Now;
-            entity.IdUser = user.Id;
-            entity.Score = 0;
-            entity.UserAnswer = "";
-            entity.Duration = 0;
-            await _unitOfWork.TaskResultRepo.AddAsync(entity);
-            await _unitOfWork.SaveChangesAsync();
-            return _mapper.Map<TaskResultDTO>(entity);
+            //var entity = _mapper.Map<LevelResult>(dto);
+            //entity.ResultDate = DateTime.Now;
+            //entity.IdUser = user.Id;
+            //entity.Score = 0;
+            //entity.UserAnswer = "";
+            //entity.Duration = 0;
+            //await _unitOfWork.TaskResultRepo.AddAsync(entity);
+            //await _unitOfWork.SaveChangesAsync();
+            return null;
         }
 
         public virtual async Task DeleteAsync(int id)
@@ -81,9 +81,8 @@ namespace NLPI.Services
             if (taskResult == null)
                 throw new NotFoundException("TaskResult", dto.Id);
 
-            taskResult.Duration = dto.Duration;
-            taskResult.Score = dto.Score;
-            taskResult.UserAnswer = dto.UserAnswer;
+            
+            taskResult.Score = dto.Score;            
 
             await _unitOfWork.TaskResultRepo.UpdateAsync(taskResult);
             await _unitOfWork.SaveChangesAsync();
@@ -91,55 +90,55 @@ namespace NLPI.Services
             await GetDataForSaveAchiev(taskResult);
             await _unitOfWork.SaveChangesAsync();
 
-            return _mapper.Map<TaskResultDTO>(taskResult);
+            return null;
         }
 
         public virtual async Task<TaskResultDTO> UpdateAsync(TaskResultDTO entity)
         {
-            var value = new TaskResult();
+            var value = new LevelResult();
             _mapper.Map(entity, value);
             await _unitOfWork.TaskResultRepo.UpdateAsync(value);
             await _unitOfWork.SaveChangesAsync();
             return entity;
         }
 
-        public async Task GetDataForSaveAchiev(TaskResult taskResult)
+        public async Task GetDataForSaveAchiev(LevelResult taskResult)
         {
-            var taskDists = await _unitOfWork.TaskDistributionRepo.GetAllAsync();
-            var taskResults = await _unitOfWork.TaskResultRepo.GetAllAsync();
-            var levels = taskDists.Where(td => td.IdTask == taskResult.IdTask).Select(td => td.IdLevel);
-            foreach(int level in levels)
-            {
-                var tasksCount = (await _unitOfWork.LevelRepo.GetByIdAsync(level)).TasksCount;
-                SetUserAchievementDTO userAchiev = new SetUserAchievementDTO() { 
-                    IdLevel = level, 
-                    IdUser = taskResult.IdUser, 
-                    CompletedCount = 0, 
-                    CorrectCount = 0, 
-                    CurrentMark = 0, 
-                    Title = "Empty", 
-                    Notes = "Empty" };
-                var tasks = taskDists.Where(td => td.IdLevel == level).Select(td => td.IdTask);
+            //var taskDists = await _unitOfWork.TaskDistributionRepo.GetAllAsync();
+            //var taskResults = await _unitOfWork.TaskResultRepo.GetAllAsync();
+            //var levels = taskDists.Where(td => td.IdTask == taskResult.IdTask).Select(td => td.IdLevel);
+            //foreach(int level in levels)
+            //{
+            //    var tasksCount = (await _unitOfWork.LevelRepo.GetByIdAsync(level)).TasksCount;
+            //    SetUserAchievementDTO userAchiev = new SetUserAchievementDTO() { 
+            //        IdLevel = level, 
+            //        IdUser = taskResult.IdUser, 
+            //        CompletedCount = 0, 
+            //        CorrectCount = 0, 
+            //        CurrentMark = 0, 
+            //        Title = "Empty", 
+            //        Notes = "Empty" };
+            //    var tasks = taskDists.Where(td => td.IdLevel == level).Select(td => td.IdTask);
 
-                foreach(var task in tasks)
-                {
-                    var searchRes = taskResults.FirstOrDefault(tr => tr.IdTask == task);
-                    if (searchRes != null)
-                    {
-                        userAchiev.CompletedCount++;
-                        userAchiev.CurrentMark += searchRes.Score;
-                        if (searchRes.Score == 100)
-                        {
-                            userAchiev.CorrectCount++;
-                        }
-                    }
-                }
-                if(tasksCount != 0)
-                {
-                    userAchiev.CurrentMark /= tasksCount;
-                }
-                await SaveAchievement(userAchiev);
-            }
+            //    foreach(var task in tasks)
+            //    {
+            //        var searchRes = taskResults.FirstOrDefault(tr => tr.IdTask == task);
+            //        if (searchRes != null)
+            //        {
+            //            userAchiev.CompletedCount++;
+            //            userAchiev.CurrentMark += searchRes.Score;
+            //            if (searchRes.Score == 100)
+            //            {
+            //                userAchiev.CorrectCount++;
+            //            }
+            //        }
+            //    }
+            //    if(tasksCount != 0)
+            //    {
+            //        userAchiev.CurrentMark /= tasksCount;
+            //    }
+            //    await SaveAchievement(userAchiev);
+            //}
         }
 
         public async Task<bool> SaveAchievement(SetUserAchievementDTO setUserAchievementDTO)

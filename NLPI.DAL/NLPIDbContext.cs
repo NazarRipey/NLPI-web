@@ -27,9 +27,9 @@ namespace NLPI.DAL
         public virtual DbSet<Question> Questions { get; set; }
         public virtual DbSet<Metadata> Metadatas { get; set; }
         public virtual DbSet<Hint> Hints { get; set; }
-        public virtual DbSet<CSSTask> Tasks { get; set; }
+        public virtual DbSet<TestTask> Tasks { get; set; }
         public virtual DbSet<TaskDistribution> TaskDistributions { get; set; }
-        public virtual DbSet<TaskResult> TaskResults { get; set; }
+        public virtual DbSet<LevelResult> TaskResults { get; set; }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
@@ -132,41 +132,41 @@ namespace NLPI.DAL
                 entity.Property(e => e.Id)
                 .HasColumnName("Id_Level");
 
-                entity.Property(e => e.Title)
+                entity.Property(e => e.Name)
                 .HasMaxLength(50)
                 .IsUnicode(false);
 
-                entity.HasData(new Level
-                {
-                    Id = 1,
-                    LevelDifficulty = Difficulty.Easy,
-                    TasksCount = 30,
-                    Title = "Some title 1"
-                }, new Level
-                {
-                    Id = 2,
-                    LevelDifficulty = Difficulty.Easy,
-                    TasksCount = 30,
-                    Title = "Some title 2"
-                }, new Level
-                {
-                    Id = 3,
-                    LevelDifficulty = Difficulty.Easy,
-                    TasksCount = 30,
-                    Title = "Some title 3"
-                }, new Level
-                {
-                    Id = 4,
-                    LevelDifficulty = Difficulty.Easy,
-                    TasksCount = 30,
-                    Title = "Some title 4"
-                }, new Level
-                {
-                    Id = 5,
-                    LevelDifficulty = Difficulty.Easy,
-                    TasksCount = 30,
-                    Title = "Some title 5"
-                });
+                //entity.HasData(new Level
+                //{
+                //    Id = 1,
+                //    LevelDifficulty = Difficulty.Easy,
+                //    TasksCount = 30,
+                //    Title = "Some title 1"
+                //}, new Level
+                //{
+                //    Id = 2,
+                //    LevelDifficulty = Difficulty.Easy,
+                //    TasksCount = 30,
+                //    Title = "Some title 2"
+                //}, new Level
+                //{
+                //    Id = 3,
+                //    LevelDifficulty = Difficulty.Easy,
+                //    TasksCount = 30,
+                //    Title = "Some title 3"
+                //}, new Level
+                //{
+                //    Id = 4,
+                //    LevelDifficulty = Difficulty.Easy,
+                //    TasksCount = 30,
+                //    Title = "Some title 4"
+                //}, new Level
+                //{
+                //    Id = 5,
+                //    LevelDifficulty = Difficulty.Easy,
+                //    TasksCount = 30,
+                //    Title = "Some title 5"
+                //});
             });
 
             modelBuilder.Entity<UserAchievement>(entity =>
@@ -190,10 +190,10 @@ namespace NLPI.DAL
                 .HasForeignKey(ua => ua.IdUser)
                 .HasConstraintName("R_1");
 
-                entity.HasOne(ua => ua.IdLevelNavigation)
-                .WithMany(l => l.UserAchievements)
-                .HasForeignKey(ua => ua.IdLevel)
-                .HasConstraintName("R_3");
+                //entity.HasOne(ua => ua.IdLevelNavigation)
+                //.WithMany(l => l.UserAchievements)
+                //.HasForeignKey(ua => ua.IdLevel)
+                //.HasConstraintName("R_3");
 
                 entity.HasData(
                     new UserAchievement
@@ -739,10 +739,10 @@ namespace NLPI.DAL
                 .HasMaxLength(200)
                 .IsUnicode(false);
 
-                entity.HasOne(h => h.IdTaskNavigation)
-                .WithMany(t => t.Hints)
-                .HasForeignKey(h => h.IdTask)
-                .HasConstraintName("R_8");
+                //entity.HasOne(h => h.IdTaskNavigation)
+                //.WithMany(t => t.Hints)
+                //.HasForeignKey(h => h.IdTask)
+                //.HasConstraintName("R_8");
 
                 entity.HasData(
                     new Hint
@@ -754,7 +754,7 @@ namespace NLPI.DAL
                     });
             });
 
-            modelBuilder.Entity<CSSTask>(entity =>
+            modelBuilder.Entity<TestTask>(entity =>
             {
                 entity.HasKey(e => e.Id)
                 .HasName("XPKTask");
@@ -762,29 +762,29 @@ namespace NLPI.DAL
                 entity.Property(e => e.Id)
                 .HasColumnName("Id_Task");
 
-                entity.HasOne(t => t.IdAnswerNavigation)
-                .WithMany(a => a.Tasks)
-                .HasForeignKey(t => t.IdAnswer)
-                .HasConstraintName("R_9");
+                //entity.HasOne(t => t.IdAnswerNavigation)
+                //.WithMany(a => a.Tasks)
+                //.HasForeignKey(t => t.IdAnswer)
+                //.HasConstraintName("R_9");
 
-                entity.HasOne(t => t.IdQuestionNavigation)
-                .WithMany(q => q.Tasks)
-                .HasForeignKey(t => t.IdQuestion)
-                .HasConstraintName("R_10");
+                //entity.HasOne(t => t.IdQuestionNavigation)
+                //.WithMany(q => q.Tasks)
+                //.HasForeignKey(t => t.IdQuestion)
+                //.HasConstraintName("R_10");
 
-                entity.HasOne(t => t.IdMetadataNavigation)
-                .WithMany(m => m.Tasks)
-                .HasForeignKey(t => t.IdMetadata)
-                .HasConstraintName("R_11");
+                //entity.HasOne(t => t.IdMetadataNavigation)
+                //.WithMany(m => m.Tasks)
+                //.HasForeignKey(t => t.IdMetadata)
+                //.HasConstraintName("R_11");
 
-                entity.HasData(
-                    new CSSTask
-                    {
-                        Id = 1,
-                        IdAnswer = 1,
-                        IdMetadata = 1,
-                        IdQuestion = 1
-                    });
+                //entity.HasData(
+                //    new CSSTask
+                //    {
+                //        Id = 1,
+                //        IdAnswer = 1,
+                //        IdMetadata = 1,
+                //        IdQuestion = 1
+                //    });
             });
 
             modelBuilder.Entity<TaskDistribution>(entity =>
@@ -795,48 +795,35 @@ namespace NLPI.DAL
                 entity.Property(e => e.Id)
                 .HasColumnName("Id_TaskDistribution");
 
-                entity.HasOne(tsd => tsd.IdLevelNavigation)
-                .WithMany(l => l.TaskDistributions)
-                .HasForeignKey(tsd => tsd.IdLevel)
-                .HasConstraintName("R_12");
+                //entity.HasOne(tsd => tsd.IdLevelNavigation)
+                //.WithMany(l => l.TaskDistributions)
+                //.HasForeignKey(tsd => tsd.IdLevel)
+                //.HasConstraintName("R_12");
 
-                entity.HasOne(tsd => tsd.IdTaskNavigation)
-                .WithMany(t => t.TaskDistributions)
-                .HasForeignKey(tsd => tsd.IdTask)
-                .HasConstraintName("R_13");
+                //entity.HasOne(tsd => tsd.IdTaskNavigation)
+                //.WithMany(t => t.TaskDistributions)
+                //.HasForeignKey(tsd => tsd.IdTask)
+                //.HasConstraintName("R_13");
             });
 
-            modelBuilder.Entity<TaskResult>(entity =>
+            modelBuilder.Entity<LevelResult>(entity =>
             {
                 entity.HasKey(e => e.Id)
                 .HasName("XPKTaskResult");
 
                 entity.Property(e => e.Id)
                 .HasColumnName("Id_TaskResult");
+                                
 
-                entity.Property(e => e.UserAnswer)
-                .HasMaxLength(100)
-                .IsUnicode(false);
-
-                entity.HasOne(tr => tr.IdTaskNavigation)
-                .WithMany(t => t.TaskResults)
-                .HasForeignKey(tr => tr.IdTask)
-                .HasConstraintName("R_14");
-
-                entity.HasOne(tr => tr.IdUserNavigation)
-                .WithMany(u => u.TaskResults)
-                .HasForeignKey(tr => tr.IdUser)
-                .HasConstraintName("R_15");
+                //entity.HasOne(tr => tr.IdTaskNavigation)
+                //.WithMany(t => t.TaskResults)
+                //.HasForeignKey(tr => tr.IdTask)
+                //.HasConstraintName("R_14");                
 
                 entity.HasData(
-                    new TaskResult
+                    new LevelResult
                     {
-                        Id = 1,
-                        IdUser = 1,
-                        IdTask = 1,
-                        ResultDate = new DateTime(2000, 8, 11),
-                        Duration = 10000,
-                        UserAnswer = "CSS",
+                        Id = 1,                        
                         Score = 25
                     });
             });

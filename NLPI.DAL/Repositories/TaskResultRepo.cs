@@ -7,7 +7,7 @@ using System.Text;
 
 namespace NLPI.DAL.Repositories
 {
-    public class TaskResultRepo : BaseRepo<TaskResult>, ITaskResultRepo
+    public class TaskResultRepo : BaseRepo<LevelResult>, ITaskResultRepo
     {
         private readonly NLPIDbContext _context;
         public TaskResultRepo(NLPIDbContext context) : base(context)

@@ -6,7 +6,7 @@ using System.Text;
 
 namespace NLPI.Core.Abstractions.IRepositories
 {
-    public interface ITaskResultRepo : IBaseRepo<TaskResult>
+    public interface ITaskResultRepo : IBaseRepo<LevelResult>
     {
     }
 }

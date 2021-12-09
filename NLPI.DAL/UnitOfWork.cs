@@ -15,7 +15,7 @@ namespace NLPI.DAL
         private IAchievementDataRepo _achievementDataRepo;
         private ILevelRepo _levelRepo;
         private IAnswerRepo _answerRepo;
-        private ICSSTaskRepo _cSSTaskRepo;
+        private ITaskRepo _taskRepo;
         private IHintRepo _hintRepo;
         private IMetadataRepo _metadataRepo;
         private IQuestionRepo _questionRepo;
@@ -75,9 +75,9 @@ namespace NLPI.DAL
             get { return _answerRepo ??= new AnswerRepo(_context); }
         }
 
-        public ICSSTaskRepo CSSTaskRepo
+        public ITaskRepo TaskRepo
         {
-            get { return _cSSTaskRepo ??= new CSSTaskRepo(_context); }
+            get { return _taskRepo ??= new TaskRepo(_context); }
         }
 
         public IHintRepo HintRepo

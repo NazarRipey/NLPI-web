@@ -7,6 +7,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using NLPI.Core.Models;
+using NLPI.Core.DTO.MainDTOs;
 
 namespace NLPI.Web.Controllers
 {
@@ -30,19 +32,18 @@ namespace NLPI.Web.Controllers
 
         }
 
-        [HttpGet("detailed/{email}")]
-        public async Task<ActionResult<List<LevelTasksDTO>>> GetDetailed(string email)
-        {
-
-            var result = await _levelService.GetAllDetailed(email);
-            return Ok(result);
-
-        }
 
         [HttpGet("{id}")]
         public async Task<ActionResult<LevelDTO>> getById(int id)
         {
             var result = await _levelService.GetIdAsync(id);
+            return Ok(result);
+        }
+
+        [HttpPost("{id}")]
+        public async Task<ActionResult<LevelDTO>> checkLevel(LevelAnswerDTO answer)
+        {
+            var result = await _levelService.CheckLevel(answer);
             return Ok(result);
         }
 
@@ -53,15 +54,9 @@ namespace NLPI.Web.Controllers
         //    return Ok(order);
         //}
 
-        [HttpPost]
-        public async Task<ActionResult> Generate(Difficulty difficulty)
-        {
-            await _levelService.GenerateAsync(difficulty);
-            return Ok();
-        }
 
         [HttpPut]
-        public async Task<ActionResult<LevelDTO>> Update(LevelDTO order)
+        public async Task<ActionResult<LevelDTO>> Update(Level order)
         {
             var result = await _levelService.UpdateAsync(order);
             return Ok(result);
