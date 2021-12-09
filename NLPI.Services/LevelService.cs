@@ -27,7 +27,8 @@ namespace NLPI.Services
 
         public async Task<LevelResult> CheckLevel(LevelAnswerDTO answer)
         {
-            var level= await _unitOfWork.LevelRepo.GetByIdAsync(answer.LevelId);
+            var levels = await _unitOfWork.LevelRepo.Get( ).Include(l => l.Tasks).ThenInclude(t => t.Answers).ToListAsync();
+            var level = levels.FirstOrDefault(l => l.Id == answer.LevelId);
             var user = (await _unitOfWork.UserRepo.GetAllAsync()).FirstOrDefault(u => u.Email == answer.Email);
             var res = 0;
 
@@ -40,6 +41,7 @@ namespace NLPI.Services
                 Score = res,
                 TaskCount = level.Tasks.Count(),
                 UserId = user.Id,
+                LevelId = level.Id
             };
 
             await _unitOfWork.TaskResultRepo.AddAsync(levelResult);

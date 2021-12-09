@@ -136,37 +136,34 @@ namespace NLPI.DAL
                 .HasMaxLength(50)
                 .IsUnicode(false);
 
-                //entity.HasData(new Level
-                //{
-                //    Id = 1,
-                //    LevelDifficulty = Difficulty.Easy,
-                //    TasksCount = 30,
-                //    Title = "Some title 1"
-                //}, new Level
-                //{
-                //    Id = 2,
-                //    LevelDifficulty = Difficulty.Easy,
-                //    TasksCount = 30,
-                //    Title = "Some title 2"
-                //}, new Level
-                //{
-                //    Id = 3,
-                //    LevelDifficulty = Difficulty.Easy,
-                //    TasksCount = 30,
-                //    Title = "Some title 3"
-                //}, new Level
-                //{
-                //    Id = 4,
-                //    LevelDifficulty = Difficulty.Easy,
-                //    TasksCount = 30,
-                //    Title = "Some title 4"
-                //}, new Level
-                //{
-                //    Id = 5,
-                //    LevelDifficulty = Difficulty.Easy,
-                //    TasksCount = 30,
-                //    Title = "Some title 5"
-                //});
+                entity.Property(e => e.LevelDifficulty);
+
+                entity.HasData(new Level
+                {
+                    Id = 1,
+                    LevelDifficulty = Difficulty.Easy,
+                    Name = "1"                    
+                }, new Level
+                {
+                    Id = 2,
+                    LevelDifficulty = Difficulty.Easy,
+                    Name = "2"
+                }, new Level
+                {
+                    Id = 3,
+                    LevelDifficulty = Difficulty.Easy,
+                    Name = "3"
+                }, new Level
+                {
+                    Id = 4,
+                    LevelDifficulty = Difficulty.Easy,
+                    Name = "4"
+                }, new Level
+                {
+                    Id = 5,
+                    LevelDifficulty = Difficulty.Easy,
+                    Name = "5"
+                });
             });
 
             modelBuilder.Entity<UserAchievement>(entity =>
@@ -711,15 +708,55 @@ namespace NLPI.DAL
                 entity.Property(e => e.Id)
                 .HasColumnName("Id_Answer");
 
-                entity.Property(e => e.EtalonAnswer)
-                .HasMaxLength(100)
+                entity.HasOne(a => a.Task)
+                .WithMany(t => t.Answers)
+                .HasForeignKey(a => a.TaskId);                
+
+                entity.Property(e => e.EtalonAnswer)                
                 .IsUnicode(false);
 
                 entity.HasData(
                     new Answer
                     {
                         Id = 1,
-                        EtalonAnswer = "CSS"
+                        EtalonAnswer = "Answer 1",
+                        TaskId = 1
+                    }, 
+                    new Answer
+                    {
+                        Id = 2,
+                        EtalonAnswer = "Answer 2",
+                        TaskId = 2
+                    }, 
+                    new Answer
+                    {
+                        Id = 3,
+                        EtalonAnswer = "Answer 3",
+                        TaskId = 3
+                    }, 
+                    new Answer
+                    {
+                        Id = 4,
+                        EtalonAnswer = "Answer 4",
+                        TaskId = 4
+                    }, 
+                    new Answer
+                    {
+                        Id = 5,
+                        EtalonAnswer = "Answer 5",
+                        TaskId = 5
+                    }, 
+                    new Answer
+                    {
+                        Id = 6,
+                        EtalonAnswer = "Answer 6",
+                        TaskId = 6
+                    }, 
+                    new Answer
+                    {
+                        Id = 7,
+                        EtalonAnswer = "Answer 7",
+                        TaskId = 7
                     });
             });
 
@@ -762,29 +799,35 @@ namespace NLPI.DAL
                 entity.Property(e => e.Id)
                 .HasColumnName("Id_Task");
 
-                //entity.HasOne(t => t.IdAnswerNavigation)
-                //.WithMany(a => a.Tasks)
-                //.HasForeignKey(t => t.IdAnswer)
-                //.HasConstraintName("R_9");
+                entity.HasOne(t => t.Level)
+                .WithMany(a => a.Tasks)
+                .HasForeignKey(t => t.LevelId);                
 
-                //entity.HasOne(t => t.IdQuestionNavigation)
-                //.WithMany(q => q.Tasks)
-                //.HasForeignKey(t => t.IdQuestion)
-                //.HasConstraintName("R_10");
-
-                //entity.HasOne(t => t.IdMetadataNavigation)
-                //.WithMany(m => m.Tasks)
-                //.HasForeignKey(t => t.IdMetadata)
-                //.HasConstraintName("R_11");
-
-                //entity.HasData(
-                //    new CSSTask
-                //    {
-                //        Id = 1,
-                //        IdAnswer = 1,
-                //        IdMetadata = 1,
-                //        IdQuestion = 1
-                //    });
+                entity.HasData(
+                    new TestTask
+                    {
+                        Id = 1,
+                        Description = "Level 1 Task 1",
+                        LevelId = 1
+                    },
+                    new TestTask
+                    {
+                        Id = 1,
+                        Description = "Level 1 Task 2",
+                        LevelId = 1
+                    },
+                    new TestTask
+                    {
+                        Id = 1,
+                        Description = "Level 1 Task 1",
+                        LevelId = 2
+                    },
+                    new TestTask
+                    {
+                        Id = 1,
+                        Description = "Level 1 Task 2",
+                        LevelId = 2
+                    });
             });
 
             modelBuilder.Entity<TaskDistribution>(entity =>
@@ -824,7 +867,26 @@ namespace NLPI.DAL
                     new LevelResult
                     {
                         Id = 1,                        
-                        Score = 25
+                        Score = 1,
+                        UserId = 3,
+                        TaskCount = 2,
+                        LevelId = 1
+                    },
+                    new LevelResult
+                    {
+                        Id = 1,
+                        Score = 1,
+                        UserId = 3,
+                        TaskCount = 2,
+                        LevelId = 1
+                    },
+                    new LevelResult
+                    {
+                        Id = 1,
+                        Score = 1,
+                        UserId = 3,
+                        TaskCount = 2,
+                        LevelId = 1
                     });
             });
         }
