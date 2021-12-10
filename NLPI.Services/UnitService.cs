@@ -20,9 +20,11 @@ namespace NLPI.Services
         }
         public virtual async Task CreateAsync(UnitDTO entity)
         {
+            var value = new Unit();
             _mapper.Map(entity, value);
             await _unitOfWork.UnitRepo.AddAsync(value);
             await _unitOfWork.SaveChangesAsync();
+            _mapper.Map(value, entity);
         }
 
         public virtual async Task DeleteAsync(int id)
