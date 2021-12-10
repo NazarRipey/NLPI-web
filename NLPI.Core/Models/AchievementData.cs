@@ -14,6 +14,6 @@ namespace NLPI.Core.Models
         public int TryCount { get; set; }
         public int IdUserAchievement { get; set; }
 
-        public UserAchievement IdUserAchievementNavigation { get; set; }
+        public virtual UserAchievement IdUserAchievementNavigation { get; set; }
     }
 }

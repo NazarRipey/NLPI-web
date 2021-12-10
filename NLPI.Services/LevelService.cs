@@ -1,20 +1,14 @@
 ﻿using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using NLPI.Core.Abstractions;
 using NLPI.Core.Abstractions.IServices;
-using NLPI.Core.DTO.AchievementsDTOs.StandartDTOs;
-using NLPI.Core.DTO.AnotherDTOs.StandartDTOs;
-using NLPI.Core.Enums;
-using NLPI.Core.DTO.AnotherDTOs.SpecializedDTOs;
+using NLPI.Core.DTO.MainDTOs;
 using NLPI.Core.Models;
 using NLPI.Services.Base;
-using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using NLPI.Services.Exceptions;
-using NLPI.Core.DTO.MainDTOs;
 
 namespace NLPI.Services
 {
@@ -27,8 +21,7 @@ namespace NLPI.Services
 
         public async Task<LevelResult> CheckLevel(LevelAnswerDTO answer)
         {
-            var levels = await _unitOfWork.LevelRepo.Get( ).Include(l => l.Tasks).ThenInclude(t => t.Answers).ToListAsync();
-            var level = levels.FirstOrDefault(l => l.Id == answer.LevelId);
+            var level = await _unitOfWork.LevelRepo.GetByIdAsync(answer.LevelId);
             var user = (await _unitOfWork.UserRepo.GetAllAsync()).FirstOrDefault(u => u.Email == answer.Email);
             var res = 0;
 
@@ -41,7 +34,6 @@ namespace NLPI.Services
                 Score = res,
                 TaskCount = level.Tasks.Count(),
                 UserId = user.Id,
-                LevelId = level.Id
             };
 
             await _unitOfWork.TaskResultRepo.AddAsync(levelResult);
@@ -52,9 +44,7 @@ namespace NLPI.Services
 
         public virtual async Task CreateAsync(Level entity)
         {
-            var value = new Level();
-            _mapper.Map(entity, value);
-            await _unitOfWork.LevelRepo.AddAsync(value);
+            await _unitOfWork.LevelRepo.AddAsync(entity);
             await _unitOfWork.SaveChangesAsync();
         }
 
@@ -86,7 +76,7 @@ namespace NLPI.Services
         }
 
         public virtual async Task<Level> UpdateAsync(Level entity)
-        {                        
+        {
             await _unitOfWork.LevelRepo.UpdateAsync(entity);
             await _unitOfWork.SaveChangesAsync();
             return entity;

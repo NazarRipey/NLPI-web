@@ -26,7 +26,8 @@ namespace NLPI.Web
             services.ConfigureInfrastructureServices();
             services.ConfigureMapping();
             services.AddHttpContextAccessor();
-            services.AddControllers();
+            services.AddControllers().AddNewtonsoftJson(options =>
+                options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
             services.ConfigureSwagger();
             services.AddCors(options =>
             {

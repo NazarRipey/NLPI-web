@@ -1,14 +1,10 @@
-﻿using NLPI.Core.Abstractions.IServices;
+﻿using Microsoft.AspNetCore.Mvc;
+using NLPI.Core.Abstractions.IServices;
 using NLPI.Core.DTO.AchievementsDTOs.StandartDTOs;
-using NLPI.Core.Enums;
-using NLPI.Core.DTO.AnotherDTOs.SpecializedDTOs;
-using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using NLPI.Core.Models;
 using NLPI.Core.DTO.MainDTOs;
+using NLPI.Core.Models;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace NLPI.Web.Controllers
 {
@@ -24,7 +20,7 @@ namespace NLPI.Web.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<List<LevelDTO>>> Get()
+        public async Task<ActionResult<List<Level>>> Get()
         {
 
             var result = await _levelService.GetAll();
@@ -47,12 +43,12 @@ namespace NLPI.Web.Controllers
             return Ok(result);
         }
 
-        //[HttpPost]
-        //public async Task<ActionResult<LevelDTO>> Pull(LevelDTO order)
-        //{
-        //    await _levelService.CreateAsync(order);
-        //    return Ok(order);
-        //}
+        [HttpPost]
+        public async Task<ActionResult<Level>> Pull(Level order)
+        {
+            await _levelService.CreateAsync(order);
+            return Ok(order);
+        }
 
 
         [HttpPut]

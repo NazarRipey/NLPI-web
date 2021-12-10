@@ -1,5 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using NLPI.Core.Enums;
 using NLPI.Core.Models;
 using System;
 
@@ -34,6 +33,8 @@ namespace NLPI.DAL
         {
             if (!optionsBuilder.IsConfigured)
                 optionsBuilder.UseSqlite("Data Source=nlpi.db");
+
+            optionsBuilder.UseLazyLoadingProxies();
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -136,32 +137,32 @@ namespace NLPI.DAL
                 .HasMaxLength(50)
                 .IsUnicode(false);
 
-                entity.Property(e => e.LevelDifficulty);
+                entity.Property(e => e.Difficulty);
 
                 entity.HasData(new Level
                 {
                     Id = 1,
-                    LevelDifficulty = Difficulty.Easy,
-                    Name = "1"                    
+                    Difficulty = "Easy",
+                    Name = "1"
                 }, new Level
                 {
                     Id = 2,
-                    LevelDifficulty = Difficulty.Easy,
+                    Difficulty = "Easy",
                     Name = "2"
                 }, new Level
                 {
                     Id = 3,
-                    LevelDifficulty = Difficulty.Easy,
+                    Difficulty = "Easy",
                     Name = "3"
                 }, new Level
                 {
                     Id = 4,
-                    LevelDifficulty = Difficulty.Easy,
+                    Difficulty = "Easy",
                     Name = "4"
                 }, new Level
                 {
                     Id = 5,
-                    LevelDifficulty = Difficulty.Easy,
+                    Difficulty = "Easy",
                     Name = "5"
                 });
             });
@@ -710,9 +711,9 @@ namespace NLPI.DAL
 
                 entity.HasOne(a => a.Task)
                 .WithMany(t => t.Answers)
-                .HasForeignKey(a => a.TaskId);                
+                .HasForeignKey(a => a.TaskId);
 
-                entity.Property(e => e.EtalonAnswer)                
+                entity.Property(e => e.EtalonAnswer)
                 .IsUnicode(false);
 
                 entity.HasData(
@@ -721,42 +722,42 @@ namespace NLPI.DAL
                         Id = 1,
                         EtalonAnswer = "Answer 1",
                         TaskId = 1
-                    }, 
+                    },
                     new Answer
                     {
                         Id = 2,
                         EtalonAnswer = "Answer 2",
                         TaskId = 2
-                    }, 
+                    },
                     new Answer
                     {
                         Id = 3,
                         EtalonAnswer = "Answer 3",
                         TaskId = 3
-                    }, 
+                    },
                     new Answer
                     {
                         Id = 4,
                         EtalonAnswer = "Answer 4",
                         TaskId = 4
-                    }, 
+                    },
                     new Answer
                     {
                         Id = 5,
                         EtalonAnswer = "Answer 5",
-                        TaskId = 5
-                    }, 
+                        TaskId = 1
+                    },
                     new Answer
                     {
                         Id = 6,
                         EtalonAnswer = "Answer 6",
-                        TaskId = 6
-                    }, 
+                        TaskId = 2
+                    },
                     new Answer
                     {
                         Id = 7,
                         EtalonAnswer = "Answer 7",
-                        TaskId = 7
+                        TaskId = 3
                     });
             });
 
@@ -801,7 +802,7 @@ namespace NLPI.DAL
 
                 entity.HasOne(t => t.Level)
                 .WithMany(a => a.Tasks)
-                .HasForeignKey(t => t.LevelId);                
+                .HasForeignKey(t => t.LevelId);
 
                 entity.HasData(
                     new TestTask
@@ -812,19 +813,19 @@ namespace NLPI.DAL
                     },
                     new TestTask
                     {
-                        Id = 1,
+                        Id = 2,
                         Description = "Level 1 Task 2",
                         LevelId = 1
                     },
                     new TestTask
                     {
-                        Id = 1,
+                        Id = 3,
                         Description = "Level 1 Task 1",
                         LevelId = 2
                     },
                     new TestTask
                     {
-                        Id = 1,
+                        Id = 4,
                         Description = "Level 1 Task 2",
                         LevelId = 2
                     });
@@ -856,7 +857,7 @@ namespace NLPI.DAL
 
                 entity.Property(e => e.Id)
                 .HasColumnName("Id_TaskResult");
-                                
+
 
                 //entity.HasOne(tr => tr.IdTaskNavigation)
                 //.WithMany(t => t.TaskResults)
@@ -866,14 +867,6 @@ namespace NLPI.DAL
                 entity.HasData(
                     new LevelResult
                     {
-                        Id = 1,                        
-                        Score = 1,
-                        UserId = 3,
-                        TaskCount = 2,
-                        LevelId = 1
-                    },
-                    new LevelResult
-                    {
                         Id = 1,
                         Score = 1,
                         UserId = 3,
@@ -882,11 +875,19 @@ namespace NLPI.DAL
                     },
                     new LevelResult
                     {
-                        Id = 1,
+                        Id = 2,
                         Score = 1,
                         UserId = 3,
                         TaskCount = 2,
-                        LevelId = 1
+                        LevelId = 2
+                    },
+                    new LevelResult
+                    {
+                        Id = 3,
+                        Score = 1,
+                        UserId = 3,
+                        TaskCount = 2,
+                        LevelId = 2
                     });
             });
         }

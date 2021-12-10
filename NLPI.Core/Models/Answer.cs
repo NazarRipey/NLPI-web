@@ -9,7 +9,7 @@ namespace NLPI.Core.Models
     {        
         public int Id { get; set; }
         public int TaskId { get; set; }
-        public TestTask Task { get; set; }
+        public virtual TestTask Task { get; set; }
         public string EtalonAnswer { get; set; }
     }
 }
