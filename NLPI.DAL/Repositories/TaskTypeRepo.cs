@@ -4,12 +4,13 @@ using NLPI.DAL.Repositories.Base;
 
 namespace NLPI.DAL.Repositories
 {
-    public class UserTaskResultRepo : BaseRepo<UserTaskResult>, IUserTaskResultRepo
+    public class TaskTypeRepo : BaseRepo<TaskType>, ITaskTypeRepo
     {
         private readonly NLPIDbContext _context;
-        public UserTaskResultRepo(NLPIDbContext context) : base(context)
+
+        public TaskTypeRepo(NLPIDbContext context) : base(context)
         {
-            _context = context;
+
         }
     }
 }

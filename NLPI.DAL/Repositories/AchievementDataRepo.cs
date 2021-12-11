@@ -1,11 +1,7 @@
 ﻿using NLPI.Core.Abstractions.IRepositories;
 using NLPI.Core.Models;
 using NLPI.DAL.Repositories.Base;
-using Microsoft.EntityFrameworkCore;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace NLPI.DAL.Repositories
@@ -20,20 +16,23 @@ namespace NLPI.DAL.Repositories
 
         public override async Task<IEnumerable<AchievementData>> GetAllAsync()
         {
-            return await _context.Set<AchievementData>()
-                .Include(achievementData => achievementData.IdUserAchievementNavigation)
-                .ThenInclude(userAchievement => userAchievement.IdLevelNavigation)
-                .ToListAsync();
+            /* return await _context.Set<AchievementData>()
+                 .Include(achievementData => achievementData.IdUserAchievementNavigation)
+                 .ThenInclude(userAchievement => userAchievement.IdLevelNavigation)
+                 .ToListAsync();*/
+            return null;
         }
 
         public override async Task<AchievementData> GetByIdAsync(int id)
         {
-            return await _context.Set<AchievementData>()
+            /*return await _context.Set<AchievementData>()
                 .Where(e => e.Id == id)
                 .Include(achievementData => achievementData.IdUserAchievementNavigation)
                 .ThenInclude(userAchievement => userAchievement.IdLevelNavigation)
                 .FirstOrDefaultAsync()
-                .ConfigureAwait(false);
+                .ConfigureAwait(false);*/
+
+            return null;
         }
     }
 }

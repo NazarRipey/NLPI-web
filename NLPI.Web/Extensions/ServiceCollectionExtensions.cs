@@ -1,15 +1,11 @@
 ﻿using AutoMapper;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.OpenApi.Models;
 using NLPI.Core.Abstractions;
 using NLPI.Core.Abstractions.IServices;
 using NLPI.Core.Mapping;
 using NLPI.DAL;
 using NLPI.Services;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.OpenApi.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace NLPI.Web.Extensions
 {
@@ -21,7 +17,6 @@ namespace NLPI.Web.Extensions
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IUserAchievementService, UserAchievementService>();
             services.AddScoped<IAchievementDataService, AchievementDataService>();
-            services.AddScoped<ILevelService, LevelService>();
             services.AddScoped<IAnswerService, AnswerService>();
             services.AddScoped<ITaskService, TaskService>();
             services.AddScoped<IHintService, HintService>();
@@ -29,14 +24,14 @@ namespace NLPI.Web.Extensions
             services.AddScoped<IQuestionService, QuestionService>();
             services.AddScoped<ITagDistributionService, TagDistributionService>();
             services.AddScoped<ITagService, TagService>();
-            services.AddScoped<ITaskDistributionService, TaskDistributionService>();
             services.AddScoped<ITaskResultService, TaskResultService>();
             services.AddScoped<IUnitService, UnitService>();
         }
 
         public static void ConfigureSwagger(this IServiceCollection services)
         {
-            services.AddSwaggerGen(c => {
+            services.AddSwaggerGen(c =>
+            {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "NLPI API", Version = "v1" });
             });
         }

@@ -1,7 +1,5 @@
 ﻿using NLPI.Core.Abstractions.IRepositories;
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace NLPI.Core.Abstractions
@@ -15,14 +13,13 @@ namespace NLPI.Core.Abstractions
         IQuestionRepo QuestionRepo { get; }
         ITagDistributionRepo TagDistributionRepo { get; }
         ITagRepo TagRepo { get; }
-        ITaskDistributionRepo TaskDistributionRepo { get; }
-        ITaskResultRepo TaskResultRepo { get; }
+        IUserTaskResultRepo UserTaskResultRepo { get; }
+        ITaskTypeRepo TaskTypeRepo { get; }
         //IUnitDistributionRepo UnitDistributionRepo { get; }
         IUnitRepo UnitRepo { get; }
         IUserRepo UserRepo { get; }
         IUserAchievementRepo UserAchievementRepo { get; }
         IAchievementDataRepo AchievementDataRepo { get; }
-        ILevelRepo LevelRepo { get; }
         Task SaveChangesAsync();
     }
 }

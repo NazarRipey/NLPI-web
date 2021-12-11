@@ -17,7 +17,6 @@ namespace NLPI.DAL
         public virtual DbSet<User> Users { get; set; }
         public virtual DbSet<UserAchievement> UserAchievements { get; set; }
         public virtual DbSet<AchievementData> AchievementDatas { get; set; }
-        public virtual DbSet<Level> Levels { get; set; }
         public virtual DbSet<Tag> Tags { get; set; }
         public virtual DbSet<Unit> Units { get; set; }
         public virtual DbSet<TagDistribution> TagDistributions { get; set; }
@@ -27,8 +26,11 @@ namespace NLPI.DAL
         public virtual DbSet<Metadata> Metadatas { get; set; }
         public virtual DbSet<Hint> Hints { get; set; }
         public virtual DbSet<TestTask> Tasks { get; set; }
-        public virtual DbSet<TaskDistribution> TaskDistributions { get; set; }
-        public virtual DbSet<LevelResult> TaskResults { get; set; }
+
+        public virtual DbSet<UserAnswer> UserAnswers { get; set; }
+        public virtual DbSet<UserTaskResult> UserTaskResults { get; set; }
+        public virtual DbSet<TaskType> TaskTypes { get; set; }
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
@@ -123,48 +125,6 @@ namespace NLPI.DAL
                         Phone = "4567890123",
                         Role = "User"
                     });
-            });
-
-            modelBuilder.Entity<Level>(entity =>
-            {
-                entity.HasKey(e => e.Id)
-                .HasName("XPKLevel");
-
-                entity.Property(e => e.Id)
-                .HasColumnName("Id_Level");
-
-                entity.Property(e => e.Name)
-                .HasMaxLength(50)
-                .IsUnicode(false);
-
-                entity.Property(e => e.Difficulty);
-
-                entity.HasData(new Level
-                {
-                    Id = 1,
-                    Difficulty = "Easy",
-                    Name = "1"
-                }, new Level
-                {
-                    Id = 2,
-                    Difficulty = "Easy",
-                    Name = "2"
-                }, new Level
-                {
-                    Id = 3,
-                    Difficulty = "Easy",
-                    Name = "3"
-                }, new Level
-                {
-                    Id = 4,
-                    Difficulty = "Easy",
-                    Name = "4"
-                }, new Level
-                {
-                    Id = 5,
-                    Difficulty = "Easy",
-                    Name = "5"
-                });
             });
 
             modelBuilder.Entity<UserAchievement>(entity =>
@@ -701,7 +661,7 @@ namespace NLPI.DAL
                     });
             });
 
-            modelBuilder.Entity<Answer>(entity =>
+            /*modelBuilder.Entity<Answer>(entity =>
             {
                 entity.HasKey(e => e.Id)
                 .HasName("XPKAnswer");
@@ -759,7 +719,7 @@ namespace NLPI.DAL
                         EtalonAnswer = "Answer 7",
                         TaskId = 3
                     });
-            });
+            });*/
 
             modelBuilder.Entity<Hint>(entity =>
             {
@@ -792,7 +752,7 @@ namespace NLPI.DAL
                     });
             });
 
-            modelBuilder.Entity<TestTask>(entity =>
+            /*modelBuilder.Entity<TestTask>(entity =>
             {
                 entity.HasKey(e => e.Id)
                 .HasName("XPKTask");
@@ -829,67 +789,48 @@ namespace NLPI.DAL
                         Description = "Level 1 Task 2",
                         LevelId = 2
                     });
-            });
+            });*/
 
-            modelBuilder.Entity<TaskDistribution>(entity =>
-            {
-                entity.HasKey(e => e.Id)
-                .HasName("XPKTaskDistribution");
+            /* modelBuilder.Entity<LevelResult>(entity =>
+             {
+                 entity.HasKey(e => e.Id)
+                 .HasName("XPKTaskResult");
 
-                entity.Property(e => e.Id)
-                .HasColumnName("Id_TaskDistribution");
-
-                //entity.HasOne(tsd => tsd.IdLevelNavigation)
-                //.WithMany(l => l.TaskDistributions)
-                //.HasForeignKey(tsd => tsd.IdLevel)
-                //.HasConstraintName("R_12");
-
-                //entity.HasOne(tsd => tsd.IdTaskNavigation)
-                //.WithMany(t => t.TaskDistributions)
-                //.HasForeignKey(tsd => tsd.IdTask)
-                //.HasConstraintName("R_13");
-            });
-
-            modelBuilder.Entity<LevelResult>(entity =>
-            {
-                entity.HasKey(e => e.Id)
-                .HasName("XPKTaskResult");
-
-                entity.Property(e => e.Id)
-                .HasColumnName("Id_TaskResult");
+                 entity.Property(e => e.Id)
+                 .HasColumnName("Id_TaskResult");
 
 
-                //entity.HasOne(tr => tr.IdTaskNavigation)
-                //.WithMany(t => t.TaskResults)
-                //.HasForeignKey(tr => tr.IdTask)
-                //.HasConstraintName("R_14");                
+                 //entity.HasOne(tr => tr.IdTaskNavigation)
+                 //.WithMany(t => t.TaskResults)
+                 //.HasForeignKey(tr => tr.IdTask)
+                 //.HasConstraintName("R_14");                
 
-                entity.HasData(
-                    new LevelResult
-                    {
-                        Id = 1,
-                        Score = 1,
-                        UserId = 3,
-                        TaskCount = 2,
-                        LevelId = 1
-                    },
-                    new LevelResult
-                    {
-                        Id = 2,
-                        Score = 1,
-                        UserId = 3,
-                        TaskCount = 2,
-                        LevelId = 2
-                    },
-                    new LevelResult
-                    {
-                        Id = 3,
-                        Score = 1,
-                        UserId = 3,
-                        TaskCount = 2,
-                        LevelId = 2
-                    });
-            });
+                 entity.HasData(
+                     new LevelResult
+                     {
+                         Id = 1,
+                         Score = 1,
+                         UserId = 3,
+                         TaskCount = 2,
+                         LevelId = 1
+                     },
+                     new LevelResult
+                     {
+                         Id = 2,
+                         Score = 1,
+                         UserId = 3,
+                         TaskCount = 2,
+                         LevelId = 2
+                     },
+                     new LevelResult
+                     {
+                         Id = 3,
+                         Score = 1,
+                         UserId = 3,
+                         TaskCount = 2,
+                         LevelId = 2
+                     });
+             });*/
         }
     }
 }

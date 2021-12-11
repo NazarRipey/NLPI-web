@@ -6,11 +6,9 @@ using NLPI.Core.DTO.AnotherDTOs.SpecializedDTOs;
 using NLPI.Core.DTO.AnotherDTOs.StandartDTOs;
 using NLPI.Core.Models;
 using NLPI.Services.Base;
-using NLPI.Services.Exceptions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace NLPI.Services
@@ -23,11 +21,11 @@ namespace NLPI.Services
         }
         public virtual async Task CreateAsync(TaskResultDTO entity)
         {
-            var value = new LevelResult();
+            /*var value = new LevelResult();
             _mapper.Map(entity, value);
             await _unitOfWork.TaskResultRepo.AddAsync(value);
             await _unitOfWork.SaveChangesAsync();
-            _mapper.Map(value, entity);
+            _mapper.Map(value, entity);*/
         }
 
         public virtual async Task<TaskResultDTO> CreateNewAsync(TaskResultCreateDTO dto)
@@ -53,31 +51,35 @@ namespace NLPI.Services
 
         public virtual async Task DeleteAsync(int id)
         {
-            var entity = await _unitOfWork.TaskResultRepo.GetByIdAsync(id);
-            await _unitOfWork.TaskResultRepo.DeleteAsync(entity);
-            await _unitOfWork.SaveChangesAsync();
+            //var entity = await _unitOfWork.TaskResultRepo.GetByIdAsync(id);
+            //await _unitOfWork.TaskResultRepo.DeleteAsync(entity);
+            //await _unitOfWork.SaveChangesAsync();
         }
 
         public virtual async Task<List<TaskResultDTO>> GetAll()
         {
-            var taskResults = await _unitOfWork.TaskResultRepo.GetAllAsync();
-            List<TaskResultDTO> taskResultDTOs = taskResults.Select(taskResult => _mapper.Map(taskResult, new TaskResultDTO())).ToList();
-            return taskResultDTOs;
+            //var taskResults = await _unitOfWork.TaskResultRepo.GetAllAsync();
+            //List<TaskResultDTO> taskResultDTOs = taskResults.Select(taskResult => _mapper.Map(taskResult, new TaskResultDTO())).ToList();
+            //return taskResultDTOs;
+
+            return null;
         }
 
         public virtual async Task<TaskResultDTO> GetIdAsync(int id)
         {
-            var taskResult = await _unitOfWork.TaskResultRepo.GetByIdAsync(id);
-            if (taskResult == null)
-                throw new Exception("Such order not found");
-            var dto = new TaskResultDTO();
-            _mapper.Map(taskResult, dto);
-            return dto;
+            // var taskResult = await _unitOfWork.TaskResultRepo.GetByIdAsync(id);
+            // if (taskResult == null)
+            //     throw new Exception("Such order not found");
+            //var dto = new TaskResultDTO();
+            //_mapper.Map(taskResult, dto);
+            //return dto;
+
+            return null;
         }
 
         public virtual async Task<TaskResultDTO> EditAsync(TaskResultUpdateDTO dto)
         {
-            var taskResult = await _unitOfWork.TaskResultRepo.GetByIdAsync(dto.Id);
+            /*var taskResult = await _unitOfWork.TaskResultRepo.GetByIdAsync(dto.Id);
             if (taskResult == null)
                 throw new NotFoundException("TaskResult", dto.Id);
 
@@ -90,55 +92,20 @@ namespace NLPI.Services
             await GetDataForSaveAchiev(taskResult);
             await _unitOfWork.SaveChangesAsync();
 
+            return null;*/
+
             return null;
         }
 
         public virtual async Task<TaskResultDTO> UpdateAsync(TaskResultDTO entity)
         {
-            var value = new LevelResult();
+            /*var value = new LevelResult();
             _mapper.Map(entity, value);
             await _unitOfWork.TaskResultRepo.UpdateAsync(value);
             await _unitOfWork.SaveChangesAsync();
-            return entity;
-        }
+            return entity;*/
 
-        public async Task GetDataForSaveAchiev(LevelResult taskResult)
-        {
-            //var taskDists = await _unitOfWork.TaskDistributionRepo.GetAllAsync();
-            //var taskResults = await _unitOfWork.TaskResultRepo.GetAllAsync();
-            //var levels = taskDists.Where(td => td.IdTask == taskResult.IdTask).Select(td => td.IdLevel);
-            //foreach(int level in levels)
-            //{
-            //    var tasksCount = (await _unitOfWork.LevelRepo.GetByIdAsync(level)).TasksCount;
-            //    SetUserAchievementDTO userAchiev = new SetUserAchievementDTO() { 
-            //        IdLevel = level, 
-            //        IdUser = taskResult.IdUser, 
-            //        CompletedCount = 0, 
-            //        CorrectCount = 0, 
-            //        CurrentMark = 0, 
-            //        Title = "Empty", 
-            //        Notes = "Empty" };
-            //    var tasks = taskDists.Where(td => td.IdLevel == level).Select(td => td.IdTask);
-
-            //    foreach(var task in tasks)
-            //    {
-            //        var searchRes = taskResults.FirstOrDefault(tr => tr.IdTask == task);
-            //        if (searchRes != null)
-            //        {
-            //            userAchiev.CompletedCount++;
-            //            userAchiev.CurrentMark += searchRes.Score;
-            //            if (searchRes.Score == 100)
-            //            {
-            //                userAchiev.CorrectCount++;
-            //            }
-            //        }
-            //    }
-            //    if(tasksCount != 0)
-            //    {
-            //        userAchiev.CurrentMark /= tasksCount;
-            //    }
-            //    await SaveAchievement(userAchiev);
-            //}
+            return null;
         }
 
         public async Task<bool> SaveAchievement(SetUserAchievementDTO setUserAchievementDTO)

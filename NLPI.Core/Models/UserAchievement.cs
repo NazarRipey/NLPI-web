@@ -19,7 +19,6 @@ namespace NLPI.Core.Models
 
 
         public virtual User IdUserNavigation { get; set; }
-        public virtual Level IdLevelNavigation { get; set; }
         public virtual ICollection<AchievementData> AchievementDatas { get; set; }
     }
 }

@@ -1,9 +1,6 @@
 ﻿using NLPI.Core.Abstractions;
 using NLPI.Core.Abstractions.IRepositories;
 using NLPI.DAL.Repositories;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace NLPI.DAL
@@ -13,16 +10,15 @@ namespace NLPI.DAL
         private IUserRepo _userRepo;
         private IUserAchievementRepo _userAchievementRepo;
         private IAchievementDataRepo _achievementDataRepo;
-        private ILevelRepo _levelRepo;
         private IAnswerRepo _answerRepo;
         private ITaskRepo _taskRepo;
+        private ITaskTypeRepo _taskTypeRepo;
         private IHintRepo _hintRepo;
         private IMetadataRepo _metadataRepo;
         private IQuestionRepo _questionRepo;
         private ITagDistributionRepo _tagDistributionRepo;
         private ITagRepo _tagRepo;
-        private ITaskDistributionRepo _taskDistributionRepo;
-        private ITaskResultRepo _taskResultRepo;
+        private IUserTaskResultRepo _userTaskResultRepo;
         //private IUnitDistributionRepo _unitDistributionRepo;
         private IUnitRepo _unitRepo;
         private NLPIDbContext _context;
@@ -65,11 +61,6 @@ namespace NLPI.DAL
             get { return _achievementDataRepo ??= new AchievementDataRepo(_context); }
         }
 
-        public ILevelRepo LevelRepo
-        {
-            get { return _levelRepo ??= new LevelRepo(_context); }
-        }
-
         public IAnswerRepo AnswerRepo
         {
             get { return _answerRepo ??= new AnswerRepo(_context); }
@@ -105,14 +96,14 @@ namespace NLPI.DAL
             get { return _tagRepo ??= new TagRepo(_context); }
         }
 
-        public ITaskDistributionRepo TaskDistributionRepo
+        public IUserTaskResultRepo UserTaskResultRepo
         {
-            get { return _taskDistributionRepo ??= new TaskDistributionRepo(_context); }
+            get { return _userTaskResultRepo ??= new UserTaskResultRepo(_context); }
         }
 
-        public ITaskResultRepo TaskResultRepo
+        public ITaskTypeRepo TaskTypeRepo
         {
-            get { return _taskResultRepo ??= new TaskResultRepo(_context); }
+            get { return _taskTypeRepo ??= new TaskTypeRepo(_context); }
         }
 
         //public IUnitDistributionRepo UnitDistributionRepo

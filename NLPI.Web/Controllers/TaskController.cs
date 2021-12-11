@@ -1,16 +1,13 @@
-﻿using NLPI.Core.Abstractions.IServices;
-using NLPI.Core.DTO.AnotherDTOs.SpecializedDTOs;
-using NLPI.Core.DTO.AnotherDTOs.StandartDTOs;
-using Microsoft.AspNetCore.Mvc;
-using System;
+﻿using Microsoft.AspNetCore.Mvc;
+using NLPI.Core.Abstractions.IServices;
+using NLPI.Core.Models;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace NLPI.Web.Controllers
 {
     [ApiController]
-    [Route("api/csstasks")]
+    [Route("api/tasks")]
     public class TaskController : ControllerBase
     {
         private ITaskService _taskService;
@@ -21,7 +18,7 @@ namespace NLPI.Web.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<List<CSSTaskDTO>>> Get()
+        public async Task<ActionResult<List<TestTask>>> Get()
         {
 
             var result = await _taskService.GetAll();
@@ -30,7 +27,7 @@ namespace NLPI.Web.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<CSSTaskDTO>> getById(int id)
+        public async Task<ActionResult<TestTask>> getById(int id)
         {
             var result = await _taskService.GetIdAsync(id);
             return Ok(result);
