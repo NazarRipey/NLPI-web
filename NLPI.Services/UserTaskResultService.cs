@@ -127,5 +127,13 @@ namespace NLPI.Services
 
             return null;
         }
+
+        public async Task<IEnumerable<UserTaskResult>> GetStatisticById(int id)
+        {
+            var results = await _unitOfWork.UserTaskResultRepo.GetAllAsync();
+
+            var r = results.Where(r => r.UserId == id).ToList();
+            return r;
+        }
     }
 }

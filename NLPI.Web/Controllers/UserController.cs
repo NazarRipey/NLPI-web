@@ -1,8 +1,8 @@
-﻿using NLPI.Core.Abstractions.IServices;
+﻿using Microsoft.AspNetCore.Mvc;
+using NLPI.Core.Abstractions.IServices;
 using NLPI.Core.DTO.AchievementsDTOs.SpecializedDTOs;
 using NLPI.Core.DTO.AchievementsDTOs.StandartDTOs;
-using Microsoft.AspNetCore.Mvc;
-using System;
+using NLPI.Core.Models;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -14,10 +14,12 @@ namespace NLPI.Web.Controllers
     public class UserController : ControllerBase
     {
         private IUserService _userService;
+        private IUserTaskResultService _userTaskResultService;
 
-        public UserController(IUserService userService)
+        public UserController(IUserService userService, IUserTaskResultService userTaskResultService)
         {
             _userService = userService;
+            _userTaskResultService = userTaskResultService;
         }
 
         [HttpGet]
@@ -85,6 +87,13 @@ namespace NLPI.Web.Controllers
         public async Task<ActionResult<UserDTO>> GetUserProfile(string email)
         {
             var result = await _userService.GetProfileInfo(email);
+            return Ok(result);
+        }
+
+        [HttpGet("statistic/{id}")]
+        public async Task<ActionResult<IEnumerable<UserTaskResult>>> GetStatisticById(int id)
+        {
+            var result = await _userTaskResultService.GetStatisticById(id);
             return Ok(result);
         }
     }
