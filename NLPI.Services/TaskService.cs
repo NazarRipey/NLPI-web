@@ -18,21 +18,27 @@ namespace NLPI.Services
         }
         public virtual async Task CreateAsync(TestTask entity)
         {
+            TestTask testTask = new TestTask()
+            {
+                Description = entity.Description,
+                Name = entity.Name,
+                TaskTypeId = entity.TaskTypeId,
+            };
+
+            await _unitOfWork.TaskRepo.AddAsync(testTask);
+
             int positionCounter = 1;
 
             foreach (var ea in entity.EtalonAnswers)
             {
                 ea.CorrectPosition = positionCounter++;
-                ea.Task = entity;
             }
 
-            foreach (var a in entity.Answers)
-            {
-                a.Task = entity;
-            }
+            var etalonAnswers = entity.EtalonAnswers.Select(x => { x.TaskId = testTask.Id; return x; }).ToList();
+            var answers = entity.Answers.Select(x => { x.TaskId = testTask.Id; return x; }).ToList();
 
-
-            await _unitOfWork.TaskRepo.AddAsync(entity);
+            await _unitOfWork.AnswerRepo.AddRangeAsync(etalonAnswers);
+            await _unitOfWork.AnswerRepo.AddRangeAsync(answers);
             await _unitOfWork.SaveChangesAsync();
         }
 
