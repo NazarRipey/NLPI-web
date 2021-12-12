@@ -2,6 +2,7 @@
 using NLPI.Core.Abstractions.IServices;
 using NLPI.Core.DTO.AchievementsDTOs.SpecializedDTOs;
 using NLPI.Core.DTO.AchievementsDTOs.StandartDTOs;
+using NLPI.Core.DTO.MainDTOs;
 using NLPI.Core.Models;
 using System.Collections.Generic;
 using System.Linq;
@@ -91,7 +92,7 @@ namespace NLPI.Web.Controllers
         }
 
         [HttpGet("statistic/{id}")]
-        public async Task<ActionResult<IEnumerable<UserTaskResult>>> GetStatisticById(int id)
+        public async Task<ActionResult<IEnumerable<UserTaskResultDto>>> GetStatisticById(int id)
         {
             var result = await _userTaskResultService.GetStatisticById(id);
             return Ok(result);

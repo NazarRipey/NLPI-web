@@ -128,12 +128,26 @@ namespace NLPI.Services
             return null;
         }
 
-        public async Task<IEnumerable<UserTaskResult>> GetStatisticById(int id)
+        public async Task<IEnumerable<UserTaskResultDto>> GetStatisticById(int id)
         {
             var results = await _unitOfWork.UserTaskResultRepo.GetAllAsync();
 
             var r = results.Where(r => r.UserId == id).ToList();
-            return r;
+
+            var userTaskResult = r.Select((x) => 
+            {
+                var task = _unitOfWork.TaskRepo.GetByIdAsync(x.TaskId);
+
+                return new UserTaskResultDto
+                {
+                    Id = x.Id,
+                    Score = x.Score,
+                    UserId = x.UserId,
+                    TaskName = task.Result.Name
+                };
+            }).ToList();
+
+            return userTaskResult;
         }
     }
 }

@@ -14,6 +14,6 @@ namespace NLPI.Core.Abstractions.IServices
         Task<TaskScoreDTO> PassTask(TaskPassingDTO taskPassing);
 
 
-        Task<IEnumerable<UserTaskResult>> GetStatisticById(int id);
+        Task<IEnumerable<UserTaskResultDto>> GetStatisticById(int id);
     }
 }
