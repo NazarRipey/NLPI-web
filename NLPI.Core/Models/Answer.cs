@@ -12,6 +12,6 @@ namespace NLPI.Core.Models
         public virtual TestTask Task { get; set; }
         public string TextAnswer { get; set; }
         public bool IsCorrect { get; set; }
-        public int CorrectPosition { get; set; }
+        public int? CorrectPosition { get; set; }
     }
 }

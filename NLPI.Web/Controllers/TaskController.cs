@@ -33,6 +33,13 @@ namespace NLPI.Web.Controllers
             return Ok(result);
         }
 
+        [HttpPost]
+        public async Task<ActionResult> Post(TestTask task)
+        {
+            await _taskService.CreateAsync(task);
+            return Ok(task);
+        }
+
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {

@@ -1,6 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using NLPI.Core.Models;
-using System;
 
 namespace NLPI.DAL
 {
@@ -15,21 +14,12 @@ namespace NLPI.DAL
         }
 
         public virtual DbSet<User> Users { get; set; }
-        public virtual DbSet<UserAchievement> UserAchievements { get; set; }
-        public virtual DbSet<AchievementData> AchievementDatas { get; set; }
-        public virtual DbSet<Tag> Tags { get; set; }
-        public virtual DbSet<Unit> Units { get; set; }
-        public virtual DbSet<TagDistribution> TagDistributions { get; set; }
-        //public virtual DbSet<UnitDistribution> UnitDistributions { get; set; }
+        public virtual DbSet<TaskType> TaskTypes { get; set; }
         public virtual DbSet<Answer> Answers { get; set; }
-        public virtual DbSet<Question> Questions { get; set; }
-        public virtual DbSet<Metadata> Metadatas { get; set; }
         public virtual DbSet<Hint> Hints { get; set; }
         public virtual DbSet<TestTask> Tasks { get; set; }
-
         public virtual DbSet<UserAnswer> UserAnswers { get; set; }
         public virtual DbSet<UserTaskResult> UserTaskResults { get; set; }
-        public virtual DbSet<TaskType> TaskTypes { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -78,590 +68,99 @@ namespace NLPI.DAL
                     new User
                     {
                         Id = 1,
-                        FirstName = "Oksana",
-                        LastName = "Iliv",
-                        Email = "ilivocs@gmail.com",
-                        Password = "_Aa123456",
+                        FirstName = "Admin",
+                        LastName = "Admin",
+                        Email = "admin@gmail.com",
+                        Password = "12345",
                         Phone = "0123456789",
-                        Role = "User"
+                        Role = "Admin"
                     },
                     new User
                     {
                         Id = 2,
-                        FirstName = "Mykhailo",
-                        LastName = "Turianskyi",
-                        Email = "turyanmykh@gmail.com",
-                        Password = "_Aa123456",
+                        FirstName = "Student",
+                        LastName = "Student",
+                        Email = "student@gmail.com",
+                        Password = "12345",
                         Phone = "1234567890",
                         Role = "User"
                     },
                     new User
                     {
                         Id = 3,
-                        FirstName = "Oleksandr",
-                        LastName = "Stasenko",
-                        Email = "stasenoleks@gmail.com",
-                        Password = "_Aa123456",
+                        FirstName = "Nazar",
+                        LastName = "Ripey",
+                        Email = "nripey@gmail.com",
+                        Password = "12345",
                         Phone = "2345678901",
                         Role = "User"
-                    },
-                    new User
-                    {
-                        Id = 4,
-                        FirstName = "Yurii",
-                        LastName = "Pynzyn",
-                        Email = "pynzynyura@gmail.com",
-                        Password = "_Aa123456",
-                        Phone = "3456789012",
-                        Role = "User"
-                    },
-                    new User
-                    {
-                        Id = 5,
-                        FirstName = "Andrii",
-                        LastName = "Hlado",
-                        Email = "hladyoandr@gmail.com",
-                        Password = "_Aa123456",
-                        Phone = "4567890123",
-                        Role = "User"
                     });
             });
 
-            modelBuilder.Entity<UserAchievement>(entity =>
+            modelBuilder.Entity<TaskType>(entity =>
             {
                 entity.HasKey(e => e.Id)
-                .HasName("XPKUserAchievement");
+                .HasName("XPKTaskType");
 
                 entity.Property(e => e.Id)
-                .HasColumnName("Id_UserAchievement");
+                .HasColumnName("Id_TaskType");
 
-                entity.Property(e => e.Title)
-                .HasMaxLength(50)
+                entity.Property(e => e.Type)
+                .HasMaxLength(30)
                 .IsUnicode(false);
-
-                entity.Property(e => e.Notes)
-                .HasMaxLength(500)
-                .IsUnicode(false);
-
-                entity.HasOne(ua => ua.IdUserNavigation)
-                .WithMany(u => u.UserAchievements)
-                .HasForeignKey(ua => ua.IdUser)
-                .HasConstraintName("R_1");
-
-                //entity.HasOne(ua => ua.IdLevelNavigation)
-                //.WithMany(l => l.UserAchievements)
-                //.HasForeignKey(ua => ua.IdLevel)
-                //.HasConstraintName("R_3");
 
                 entity.HasData(
-                    new UserAchievement
+                    new TaskType
                     {
                         Id = 1,
-                        Title = "Task1 Achivement",
-                        Notes = "Need to learn margin",
-                        IdLevel = 1,
-                        IdUser = 1,
-                        SaveDate = new DateTime(2020, 12, 19)
+                        Type = "Testing type clasification"
                     },
-                    new UserAchievement
+                    new TaskType
                     {
                         Id = 2,
-                        Title = "Task2 Achivement",
-                        Notes = "Need to learn padding",
-                        IdLevel = 2,
-                        IdUser = 1,
-                        SaveDate = new DateTime(2020, 12, 21)
-                    },
-                    new UserAchievement
-                    {
-                        Id = 3,
-                        Title = "Task3 Achivement",
-                        Notes = "Need to learn border",
-                        IdLevel = 3,
-                        IdUser = 1,
-                        SaveDate = new DateTime(2020, 12, 23)
-                    },
-                    new UserAchievement
-                    {
-                        Id = 4,
-                        Title = "Task4 Achivement",
-                        Notes = "Need to learn links",
-                        IdLevel = 4,
-                        IdUser = 1,
-                        SaveDate = new DateTime(2020, 12, 25)
-                    },
-                    new UserAchievement
-                    {
-                        Id = 5,
-                        Title = "Task5 Achivement",
-                        Notes = "Need to learn tables",
-                        IdLevel = 5,
-                        IdUser = 1,
-                        SaveDate = new DateTime(2020, 12, 27)
-                    },
-                    new UserAchievement
-                    {
-                        Id = 6,
-                        Title = "Task1 Achivement",
-                        Notes = "Need to learn position",
-                        IdLevel = 1,
-                        IdUser = 2,
-                        SaveDate = new DateTime(2020, 12, 29)
-                    },
-                    new UserAchievement
-                    {
-                        Id = 7,
-                        Title = "Task2 Achivement",
-                        Notes = "Need to learn float",
-                        IdLevel = 2,
-                        IdUser = 2,
-                        SaveDate = new DateTime(2020, 12, 31)
-                    },
-                    new UserAchievement
-                    {
-                        Id = 8,
-                        Title = "Task3 Achivement",
-                        Notes = "Need to learn align",
-                        IdLevel = 3,
-                        IdUser = 2,
-                        SaveDate = new DateTime(2020, 12, 20)
-                    },
-                    new UserAchievement
-                    {
-                        Id = 9,
-                        Title = "Task4 Achivement",
-                        Notes = "Need to learn opacity",
-                        IdLevel = 4,
-                        IdUser = 2,
-                        SaveDate = new DateTime(2020, 12, 22)
-                    },
-                    new UserAchievement
-                    {
-                        Id = 10,
-                        Title = "Task5 Achivement",
-                        Notes = "Need to learn forms",
-                        IdLevel = 5,
-                        IdUser = 2,
-                        SaveDate = new DateTime(2020, 12, 24)
+                        Type = "Test case creation"
                     });
             });
 
-            modelBuilder.Entity<AchievementData>(entity =>
+            modelBuilder.Entity<TestTask>(entity =>
             {
                 entity.HasKey(e => e.Id)
-                .HasName("XPKAchievementData");
+                .HasName("XPKTask");
 
                 entity.Property(e => e.Id)
-                .HasColumnName("Id_AchievementData");
+                .HasColumnName("Id_Task");
 
-                entity.HasOne(ad => ad.IdUserAchievementNavigation)
-                .WithMany(ua => ua.AchievementDatas)
-                .HasForeignKey(ad => ad.IdUserAchievement)
-                .HasConstraintName("R_2");
+                entity.HasOne(t => t.TaskType)
+                    .WithMany(tt => tt.TestTasks)
+                .HasForeignKey(t => t.TaskTypeId);
+
+                entity.HasMany(t => t.Answers)
+                    .WithOne(a => a.Task)
+                .HasForeignKey(a => a.TaskId);
+
+                entity.HasMany(t => t.Answers)
+                    .WithOne(a => a.Task)
+                .HasForeignKey(a => a.TaskId);
 
                 entity.HasData(
-                    new AchievementData
+                    new TestTask
                     {
                         Id = 1,
-                        CompletedCount = 15,
-                        CorrectCount = 12,
-                        CurrentMark = 24,
-                        TryCount = 1,
-                        IdUserAchievement = 1
+                        Name = "Crossplatform test classification",
+                        Description = "Owner wants to make his web-app compatible with other actual browsers and OS.",
+                        TaskTypeId = 1
                     },
-                    new AchievementData
+                    new TestTask
                     {
                         Id = 2,
-                        CompletedCount = 18,
-                        CorrectCount = 15,
-                        CurrentMark = 30,
-                        TryCount = 2,
-                        IdUserAchievement = 1
-                    },
-                    new AchievementData
-                    {
-                        Id = 3,
-                        CompletedCount = 21,
-                        CorrectCount = 18,
-                        CurrentMark = 36,
-                        TryCount = 3,
-                        IdUserAchievement = 1
-                    },
-                    new AchievementData
-                    {
-                        Id = 4,
-                        CompletedCount = 17,
-                        CorrectCount = 14,
-                        CurrentMark = 28,
-                        TryCount = 1,
-                        IdUserAchievement = 2
-                    },
-                    new AchievementData
-                    {
-                        Id = 5,
-                        CompletedCount = 20,
-                        CorrectCount = 17,
-                        CurrentMark = 34,
-                        TryCount = 2,
-                        IdUserAchievement = 2
-                    },
-                    new AchievementData
-                    {
-                        Id = 6,
-                        CompletedCount = 23,
-                        CorrectCount = 20,
-                        CurrentMark = 40,
-                        TryCount = 3,
-                        IdUserAchievement = 2
-                    },
-                    new AchievementData
-                    {
-                        Id = 7,
-                        CompletedCount = 19,
-                        CorrectCount = 16,
-                        CurrentMark = 32,
-                        TryCount = 1,
-                        IdUserAchievement = 3
-                    },
-                    new AchievementData
-                    {
-                        Id = 8,
-                        CompletedCount = 22,
-                        CorrectCount = 19,
-                        CurrentMark = 38,
-                        TryCount = 2,
-                        IdUserAchievement = 3
-                    },
-                    new AchievementData
-                    {
-                        Id = 9,
-                        CompletedCount = 25,
-                        CorrectCount = 22,
-                        CurrentMark = 44,
-                        TryCount = 3,
-                        IdUserAchievement = 3
-                    },
-                    new AchievementData
-                    {
-                        Id = 10,
-                        CompletedCount = 21,
-                        CorrectCount = 18,
-                        CurrentMark = 36,
-                        TryCount = 1,
-                        IdUserAchievement = 4
-                    },
-                    new AchievementData
-                    {
-                        Id = 11,
-                        CompletedCount = 24,
-                        CorrectCount = 21,
-                        CurrentMark = 42,
-                        TryCount = 2,
-                        IdUserAchievement = 4
-                    },
-                    new AchievementData
-                    {
-                        Id = 12,
-                        CompletedCount = 27,
-                        CorrectCount = 24,
-                        CurrentMark = 48,
-                        TryCount = 3,
-                        IdUserAchievement = 4
-                    },
-                    new AchievementData
-                    {
-                        Id = 13,
-                        CompletedCount = 23,
-                        CorrectCount = 20,
-                        CurrentMark = 40,
-                        TryCount = 1,
-                        IdUserAchievement = 5
-                    },
-                    new AchievementData
-                    {
-                        Id = 14,
-                        CompletedCount = 26,
-                        CorrectCount = 23,
-                        CurrentMark = 46,
-                        TryCount = 2,
-                        IdUserAchievement = 5
-                    },
-                    new AchievementData
-                    {
-                        Id = 15,
-                        CompletedCount = 29,
-                        CorrectCount = 26,
-                        CurrentMark = 52,
-                        TryCount = 3,
-                        IdUserAchievement = 5
-                    },
-                    new AchievementData
-                    {
-                        Id = 16,
-                        CompletedCount = 16,
-                        CorrectCount = 11,
-                        CurrentMark = 22,
-                        TryCount = 1,
-                        IdUserAchievement = 6
-                    },
-                    new AchievementData
-                    {
-                        Id = 17,
-                        CompletedCount = 19,
-                        CorrectCount = 14,
-                        CurrentMark = 28,
-                        TryCount = 2,
-                        IdUserAchievement = 6
-                    },
-                    new AchievementData
-                    {
-                        Id = 18,
-                        CompletedCount = 22,
-                        CorrectCount = 17,
-                        CurrentMark = 34,
-                        TryCount = 3,
-                        IdUserAchievement = 6
-                    },
-                    new AchievementData
-                    {
-                        Id = 19,
-                        CompletedCount = 18,
-                        CorrectCount = 13,
-                        CurrentMark = 26,
-                        TryCount = 1,
-                        IdUserAchievement = 7
-                    },
-                    new AchievementData
-                    {
-                        Id = 20,
-                        CompletedCount = 21,
-                        CorrectCount = 16,
-                        CurrentMark = 32,
-                        TryCount = 2,
-                        IdUserAchievement = 7
-                    },
-                    new AchievementData
-                    {
-                        Id = 21,
-                        CompletedCount = 24,
-                        CorrectCount = 19,
-                        CurrentMark = 38,
-                        TryCount = 3,
-                        IdUserAchievement = 7
-                    },
-                    new AchievementData
-                    {
-                        Id = 22,
-                        CompletedCount = 20,
-                        CorrectCount = 15,
-                        CurrentMark = 30,
-                        TryCount = 1,
-                        IdUserAchievement = 8
-                    },
-                    new AchievementData
-                    {
-                        Id = 23,
-                        CompletedCount = 23,
-                        CorrectCount = 18,
-                        CurrentMark = 36,
-                        TryCount = 2,
-                        IdUserAchievement = 8
-                    },
-                    new AchievementData
-                    {
-                        Id = 24,
-                        CompletedCount = 26,
-                        CorrectCount = 21,
-                        CurrentMark = 42,
-                        TryCount = 3,
-                        IdUserAchievement = 8
-                    },
-                    new AchievementData
-                    {
-                        Id = 25,
-                        CompletedCount = 22,
-                        CorrectCount = 17,
-                        CurrentMark = 34,
-                        TryCount = 1,
-                        IdUserAchievement = 9
-                    },
-                    new AchievementData
-                    {
-                        Id = 26,
-                        CompletedCount = 25,
-                        CorrectCount = 20,
-                        CurrentMark = 40,
-                        TryCount = 2,
-                        IdUserAchievement = 9
-                    },
-                    new AchievementData
-                    {
-                        Id = 27,
-                        CompletedCount = 28,
-                        CorrectCount = 23,
-                        CurrentMark = 46,
-                        TryCount = 3,
-                        IdUserAchievement = 9
-                    },
-                    new AchievementData
-                    {
-                        Id = 28,
-                        CompletedCount = 24,
-                        CorrectCount = 19,
-                        CurrentMark = 38,
-                        TryCount = 1,
-                        IdUserAchievement = 10
-                    },
-                    new AchievementData
-                    {
-                        Id = 29,
-                        CompletedCount = 27,
-                        CorrectCount = 22,
-                        CurrentMark = 44,
-                        TryCount = 2,
-                        IdUserAchievement = 10
-                    },
-                    new AchievementData
-                    {
-                        Id = 30,
-                        CompletedCount = 30,
-                        CorrectCount = 25,
-                        CurrentMark = 50,
-                        TryCount = 3,
-                        IdUserAchievement = 10
+                        Name = "Password recovery test case",
+                        Description = "Check if link with password recovery in auto email is working correctly.",
+                        TaskTypeId = 2
                     });
             });
 
-            modelBuilder.Entity<Tag>(entity =>
-            {
-                entity.HasKey(e => e.Id)
-                .HasName("XPKTag");
 
-                entity.Property(e => e.Id)
-                .HasColumnName("Id_Tag");
-
-                entity.Property(e => e.Name)
-                .HasMaxLength(50)
-                .IsUnicode(false);
-
-                entity.HasData(
-                    new Tag
-                    {
-                        Id = 1,
-                        Name = "CSS"
-                    });
-            });
-
-            modelBuilder.Entity<Unit>(entity =>
-            {
-                entity.HasKey(e => e.Id)
-                .HasName("XPKUnit");
-
-                entity.Property(e => e.Id)
-                .HasColumnName("Id_Unit");
-
-                entity.Property(e => e.Name)
-                .HasMaxLength(50)
-                .IsUnicode(false);
-
-                entity.HasData(
-                    new Unit
-                    {
-                        Id = 1,
-                        Name = "CSS"
-                    });
-            });
-
-            modelBuilder.Entity<TagDistribution>(entity =>
-            {
-                entity.HasKey(e => e.Id)
-                .HasName("XPKTagDistribution");
-
-                entity.Property(e => e.Id)
-                .HasColumnName("Id_TagDistribution");
-
-                entity.HasOne(td => td.IdTagNavigation)
-                .WithMany(t => t.TagDistributions)
-                .HasForeignKey(td => td.IdTag)
-                .HasConstraintName("R_4");
-
-                entity.HasOne(td => td.IdMetadataNavigation)
-                .WithMany(m => m.TagDistributions)
-                .HasForeignKey(td => td.IdMetadata)
-                .HasConstraintName("R_5");
-
-                entity.HasData(
-                    new TagDistribution
-                    {
-                        Id = 1,
-                        IdMetadata = 1,
-                        IdTag = 1
-                    });
-            });
-
-            //modelBuilder.Entity<UnitDistribution>(entity => 
-            //{
-            //    entity.HasKey(e => e.Id)
-            //    .HasName("XPKUnitDistribution");
-
-            //    entity.Property(e => e.Id)
-            //    .HasColumnName("Id_UnitDistribution");
-
-            //    entity.HasOne(ud => ud.IdUnitNavigation)
-            //    .WithMany(u => u.UnitDistributions)
-            //    .HasForeignKey(ud => ud.IdUnit)
-            //    .HasConstraintName("R_6");
-
-            //    entity.HasOne(ud => ud.IdMetadataNavigation)
-            //    .WithMany(m => m.UnitDistributions)
-            //    .HasForeignKey(ud => ud.IdMetadata)
-            //    .HasConstraintName("R_7");
-
-            //    entity.HasData(
-            //        new UnitDistribution 
-            //        {
-            //            Id = 1,
-            //            IdMetadata = 1,
-            //            IdUnit = 1
-            //        });
-            //});
-
-            modelBuilder.Entity<Metadata>(entity =>
-            {
-                entity.HasKey(e => e.Id)
-                .HasName("XPKMetadata");
-
-                entity.Property(e => e.Id)
-                .HasColumnName("Id_Metadata");
-
-                entity.HasData(
-                    new Metadata
-                    {
-                        Id = 1
-                    });
-            });
-
-            modelBuilder.Entity<Question>(entity =>
-            {
-                entity.HasKey(e => e.Id)
-                .HasName("XPKQuestion");
-
-                entity.Property(e => e.Id)
-                .HasColumnName("Id_Question");
-
-                entity.Property(e => e.QuestionText)
-                .HasMaxLength(500)
-                .IsUnicode(false);
-
-                entity.HasData(
-                    new Question
-                    {
-                        Id = 1,
-                        QuestionText = "CSS"
-                    });
-            });
-
-            /*modelBuilder.Entity<Answer>(entity =>
+            modelBuilder.Entity<Answer>(entity =>
             {
                 entity.HasKey(e => e.Id)
                 .HasName("XPKAnswer");
@@ -669,57 +168,143 @@ namespace NLPI.DAL
                 entity.Property(e => e.Id)
                 .HasColumnName("Id_Answer");
 
-                entity.HasOne(a => a.Task)
-                .WithMany(t => t.Answers)
-                .HasForeignKey(a => a.TaskId);
-
-                entity.Property(e => e.EtalonAnswer)
+                entity.Property(e => e.TextAnswer)
                 .IsUnicode(false);
 
                 entity.HasData(
                     new Answer
                     {
                         Id = 1,
-                        EtalonAnswer = "Answer 1",
-                        TaskId = 1
+                        TaskId = 1,
+                        IsCorrect = true,
+                        CorrectPosition = 4,
+                        TextAnswer = "Compatibility Testing"
                     },
                     new Answer
                     {
                         Id = 2,
-                        EtalonAnswer = "Answer 2",
-                        TaskId = 2
+                        TaskId = 1,
+                        IsCorrect = false,
+                        TextAnswer = "Volume testing"
                     },
                     new Answer
                     {
                         Id = 3,
-                        EtalonAnswer = "Answer 3",
-                        TaskId = 3
+                        TaskId = 1,
+                        IsCorrect = true,
+                        CorrectPosition = 2,
+                        TextAnswer = "Defect Validation"
                     },
                     new Answer
                     {
                         Id = 4,
-                        EtalonAnswer = "Answer 4",
-                        TaskId = 4
+                        TaskId = 1,
+                        IsCorrect = false,
+                        TextAnswer = "Installability testing"
                     },
                     new Answer
                     {
                         Id = 5,
-                        EtalonAnswer = "Answer 5",
-                        TaskId = 1
+                        TaskId = 1,
+                        IsCorrect = false,
+                        TextAnswer = "GUI testing"
                     },
                     new Answer
                     {
                         Id = 6,
-                        EtalonAnswer = "Answer 6",
-                        TaskId = 2
+                        TaskId = 1,
+                        IsCorrect = true,
+                        CorrectPosition = 1,
+                        TextAnswer = "Smoke testing"
                     },
                     new Answer
                     {
                         Id = 7,
-                        EtalonAnswer = "Answer 7",
-                        TaskId = 3
+                        TaskId = 1,
+                        IsCorrect = false,
+                        TextAnswer = "Accessibility testing"
+                    },
+                    new Answer
+                    {
+                        Id = 8,
+                        TaskId = 1,
+                        IsCorrect = false,
+                        TextAnswer = "New feature testing"
+                    },
+                    new Answer
+                    {
+                        Id = 9,
+                        TaskId = 1,
+                        IsCorrect = true,
+                        CorrectPosition = 3,
+                        TextAnswer = "Regression Testing"
+                    },
+                    new Answer
+                    {
+                        Id = 10,
+                        TaskId = 1,
+                        IsCorrect = false,
+                        TextAnswer = "Safety testing"
+                    },
+
+                   new Answer
+                   {
+                       Id = 11,
+                       TaskId = 2,
+                       IsCorrect = false,
+                       TextAnswer = "Type in field incorrect email"
+                   },
+                    new Answer
+                    {
+                        Id = 12,
+                        TaskId = 2,
+                        IsCorrect = true,
+                        CorrectPosition = 5,
+                        TextAnswer = "Validate that link is working correctly"
+                    },
+                    new Answer
+                    {
+                        Id = 13,
+                        TaskId = 2,
+                        IsCorrect = true,
+                        CorrectPosition = 3,
+                        TextAnswer = "Type in field valid account’s email"
+                    },
+                    new Answer
+                    {
+                        Id = 14,
+                        TaskId = 2,
+                        IsCorrect = true,
+                        CorrectPosition = 4,
+                        TextAnswer = "Check that email for a new letter with link"
+                    }, new Answer
+                    {
+                        Id = 15,
+                        TaskId = 2,
+                        IsCorrect = false,
+                        TextAnswer = "Return on main page"
+                    }, new Answer
+                    {
+                        Id = 16,
+                        TaskId = 2,
+                        IsCorrect = true,
+                        CorrectPosition = 2,
+                        TextAnswer = "Click on link «Forgot your password ?»"
+                    }, new Answer
+                    {
+                        Id = 17,
+                        TaskId = 2,
+                        IsCorrect = true,
+                        CorrectPosition = 1,
+                        TextAnswer = "Open Log In page(Log out if necessary)"
+                    }, new Answer
+                    {
+                        Id = 18,
+                        TaskId = 2,
+                        IsCorrect = false,
+                        TextAnswer = "Log In system / or check that you are in"
                     });
-            });*/
+            });
 
             modelBuilder.Entity<Hint>(entity =>
             {
@@ -727,20 +312,15 @@ namespace NLPI.DAL
                 .HasName("XPKHint");
 
                 entity.Property(e => e.Id)
-                .HasColumnName("Id_Hint");
+                       .HasColumnName("Id_Hint");
 
                 entity.Property(e => e.HintType)
-                .HasMaxLength(20)
-                .IsUnicode(false);
+                       .HasMaxLength(20)
+                       .IsUnicode(false);
 
                 entity.Property(e => e.HintText)
-                .HasMaxLength(200)
-                .IsUnicode(false);
-
-                //entity.HasOne(h => h.IdTaskNavigation)
-                //.WithMany(t => t.Hints)
-                //.HasForeignKey(h => h.IdTask)
-                //.HasConstraintName("R_8");
+                       .HasMaxLength(200)
+                       .IsUnicode(false);
 
                 entity.HasData(
                     new Hint
@@ -751,86 +331,6 @@ namespace NLPI.DAL
                         HintText = "CSS"
                     });
             });
-
-            /*modelBuilder.Entity<TestTask>(entity =>
-            {
-                entity.HasKey(e => e.Id)
-                .HasName("XPKTask");
-
-                entity.Property(e => e.Id)
-                .HasColumnName("Id_Task");
-
-                entity.HasOne(t => t.Level)
-                .WithMany(a => a.Tasks)
-                .HasForeignKey(t => t.LevelId);
-
-                entity.HasData(
-                    new TestTask
-                    {
-                        Id = 1,
-                        Description = "Level 1 Task 1",
-                        LevelId = 1
-                    },
-                    new TestTask
-                    {
-                        Id = 2,
-                        Description = "Level 1 Task 2",
-                        LevelId = 1
-                    },
-                    new TestTask
-                    {
-                        Id = 3,
-                        Description = "Level 1 Task 1",
-                        LevelId = 2
-                    },
-                    new TestTask
-                    {
-                        Id = 4,
-                        Description = "Level 1 Task 2",
-                        LevelId = 2
-                    });
-            });*/
-
-            /* modelBuilder.Entity<LevelResult>(entity =>
-             {
-                 entity.HasKey(e => e.Id)
-                 .HasName("XPKTaskResult");
-
-                 entity.Property(e => e.Id)
-                 .HasColumnName("Id_TaskResult");
-
-
-                 //entity.HasOne(tr => tr.IdTaskNavigation)
-                 //.WithMany(t => t.TaskResults)
-                 //.HasForeignKey(tr => tr.IdTask)
-                 //.HasConstraintName("R_14");                
-
-                 entity.HasData(
-                     new LevelResult
-                     {
-                         Id = 1,
-                         Score = 1,
-                         UserId = 3,
-                         TaskCount = 2,
-                         LevelId = 1
-                     },
-                     new LevelResult
-                     {
-                         Id = 2,
-                         Score = 1,
-                         UserId = 3,
-                         TaskCount = 2,
-                         LevelId = 2
-                     },
-                     new LevelResult
-                     {
-                         Id = 3,
-                         Score = 1,
-                         UserId = 3,
-                         TaskCount = 2,
-                         LevelId = 2
-                     });
-             });*/
         }
     }
 }

@@ -11,10 +11,12 @@ namespace NLPI.Web.Controllers
     public class TaskTypeController : ControllerBase
     {
         private ITaskTypeService _taskTaskService;
+        private ITaskService _taskService;
 
-        public TaskTypeController(ITaskTypeService taskTypeService)
+        public TaskTypeController(ITaskTypeService taskTypeService, ITaskService taskService)
         {
             _taskTaskService = taskTypeService;
+            _taskService = taskService;
         }
 
         [HttpGet]
@@ -33,11 +35,19 @@ namespace NLPI.Web.Controllers
             return Ok(result);
         }
 
+        [HttpGet("{id}/tasks")]
+        public async Task<ActionResult<List<TestTask>>> getTasksById(int id)
+        {
+            var result = await _taskService.GetTaskByTypeId(id);
+            return Ok(result);
+        }
+
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
             await _taskTaskService.DeleteAsync(id);
             return NoContent();
         }
+
     }
 }

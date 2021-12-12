@@ -1,17 +1,15 @@
-﻿using NLPI.Core.Abstractions.IRepositories.Base;
+﻿using Microsoft.EntityFrameworkCore;
+using NLPI.Core.Abstractions.IRepositories.Base;
 using NLPI.Core.Models.Base;
-using Microsoft.EntityFrameworkCore;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace NLPI.DAL.Repositories.Base
 {
     public class BaseRepo<TEntity> : IBaseRepo<TEntity> where TEntity : class, IBaseEntity
     {
-        private readonly NLPIDbContext _context;
+        protected readonly NLPIDbContext _context;
         private readonly DbSet<TEntity> _dbSet;
         protected BaseRepo(NLPIDbContext context)
         {

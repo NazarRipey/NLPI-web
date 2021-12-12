@@ -1,10 +1,8 @@
-﻿using NLPI.Core.Abstractions.IServices;
-using NLPI.Core.DTO.AnotherDTOs.SpecializedDTOs;
+﻿using Microsoft.AspNetCore.Mvc;
+using NLPI.Core.Abstractions.IServices;
 using NLPI.Core.DTO.AnotherDTOs.StandartDTOs;
-using Microsoft.AspNetCore.Mvc;
-using System;
+using NLPI.Core.DTO.MainDTOs;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace NLPI.Web.Controllers
@@ -13,18 +11,18 @@ namespace NLPI.Web.Controllers
     [Route("api/taskresults")]
     public class TaskResultController : ControllerBase
     {
-        private ITaskResultService _taskResultService;
+        private IUserTaskResultService _userTaskResultService;
 
-        public TaskResultController(ITaskResultService taskResultService)
+        public TaskResultController(IUserTaskResultService taskResultService)
         {
-            _taskResultService = taskResultService;
+            _userTaskResultService = taskResultService;
         }
 
         [HttpGet]
         public async Task<ActionResult<List<TaskResultDTO>>> Get()
         {
 
-            var result = await _taskResultService.GetAll();
+            var result = await _userTaskResultService.GetAll();
             return Ok(result);
 
         }
@@ -32,42 +30,35 @@ namespace NLPI.Web.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<TaskResultDTO>> getById(int id)
         {
-            var result = await _taskResultService.GetIdAsync(id);
+            var result = await _userTaskResultService.GetIdAsync(id);
             return Ok(result);
         }
 
         [HttpPost]
-        public async Task<ActionResult<TaskResultDTO>> Pull(TaskResultDTO order)
+        public async Task<ActionResult<TaskScoreDTO>> PassTask(TaskPassingDTO order)
         {
-            await _taskResultService.CreateAsync(order);
-            return Ok(order);
+            var scoreDTO = await _userTaskResultService.PassTask(order);
+            return Ok(scoreDTO);
         }
 
         [HttpPost("new")]
         public async Task<ActionResult<TaskResultDTO>> Pull(TaskResultCreateDTO order)
         {
-            var created = await _taskResultService.CreateNewAsync(order);
+            var created = await _userTaskResultService.CreateNewAsync(order);
             return Ok(created);
-        }
-
-        [HttpPut("edit")]
-        public async Task<ActionResult<TaskResultDTO>> Update(TaskResultUpdateDTO order)
-        {
-            var result = await _taskResultService.EditAsync(order);
-            return Ok(result);
         }
 
         [HttpPut]
         public async Task<ActionResult<TaskResultDTO>> Update(TaskResultDTO order)
         {
-            var result = await _taskResultService.UpdateAsync(order);
+            var result = await _userTaskResultService.UpdateAsync(order);
             return Ok(result);
         }
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
-            await _taskResultService.DeleteAsync(id);
+            await _userTaskResultService.DeleteAsync(id);
             return NoContent();
         }
     }

@@ -1,4 +1,5 @@
 ﻿using NLPI.Core.Models.Base;
+using System.Collections.Generic;
 
 namespace NLPI.Core.Models
 {
@@ -6,5 +7,7 @@ namespace NLPI.Core.Models
     {
         public int Id { get; set; }
         public string Type { get; set; }
+
+        public virtual ICollection<TestTask> TestTasks { get; set; }
     }
 }

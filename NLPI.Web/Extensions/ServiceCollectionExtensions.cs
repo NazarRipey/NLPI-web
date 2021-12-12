@@ -15,17 +15,12 @@ namespace NLPI.Web.Extensions
         {
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped<IUserService, UserService>();
-            services.AddScoped<IUserAchievementService, UserAchievementService>();
-            services.AddScoped<IAchievementDataService, AchievementDataService>();
             services.AddScoped<IAnswerService, AnswerService>();
             services.AddScoped<ITaskService, TaskService>();
             services.AddScoped<IHintService, HintService>();
-            services.AddScoped<IMetadataService, MetadataService>();
-            services.AddScoped<IQuestionService, QuestionService>();
-            services.AddScoped<ITagDistributionService, TagDistributionService>();
-            services.AddScoped<ITagService, TagService>();
-            services.AddScoped<ITaskResultService, TaskResultService>();
-            services.AddScoped<IUnitService, UnitService>();
+            services.AddScoped<ITaskTypeService, TaskTypeService>();
+            services.AddScoped<IUserTaskResultService, UserTaskResultService>();
+            services.AddScoped<IUserAnswerService, UserAnswerService>();
         }
 
         public static void ConfigureSwagger(this IServiceCollection services)
